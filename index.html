@@ -14,8 +14,10 @@
             --accent-gold: #D4AF37; /* Royal Marigold Gold */
             --accent-saffron: #E35E25; /* Maharashtrian Saffron */
             --text-dark: #1A332E;
-            --envelope-color: #082b27;
-            --envelope-flap: #0c443e;
+            --envelope-base: #0c4a44;
+            
+            /* Realistic paper texture */
+            --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
         }
 
         * {
@@ -31,62 +33,61 @@
             overflow-x: hidden;
         }
 
-        /* Create artificial scrolling height to power the animations */
-        .scroll-space {
-            height: 400vh; 
-            position: relative;
+        /* Continuous scroll container */
+        .scroll-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* The viewport container that stays fixed while you scroll */
-        .viewport-lock {
-            position: sticky;
-            top: 0;
-            height: 100vh;
+        /* --- STAGE 1: THE ENVELOPE OPENING --- */
+        .envelope-section {
+            height: 140vh; /* Extra breathing room to scroll and open flap */
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, var(--bg-tropical) 0%, #051a18 100%);
-            overflow: hidden;
+            position: relative;
+            perspective: 1500px;
         }
 
-        /* --- THE ENVELOPE --- */
-        .envelope-wrapper {
-            position: relative;
+        .envelope-sticky {
+            position: sticky;
+            top: 10vh;
             width: 450px;
             height: 550px;
-            background-color: var(--envelope-color);
-            border-radius: 8px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            background-color: var(--envelope-base);
+            background-image: var(--paper-texture);
+            border-radius: 6px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
             display: flex;
             justify-content: center;
             align-items: center;
-            perspective: 1000px;
+            transition: transform 0.5s ease;
             
-            /* Scroll Animation to fade/shrink envelope slightly as card pulls out */
-            animation: scaleEnvelope linear both;
+            /* Linked to scroll timeline to sink down as you scroll past opening */
+            animation: envelopeSink linear both;
             animation-timeline: scroll(root);
-            animation-range: exit-crossing 20% exit-crossing 60%;
+            animation-range: exit-crossing 15% exit-crossing 45%;
         }
 
-        /* Envelope Top Flap */
         .envelope-flap {
             position: absolute;
             top: 0; left: 0; width: 0; height: 0;
             border-left: 225px solid transparent;
             border-right: 225px solid transparent;
-            border-top: 200px solid var(--envelope-flap);
+            border-top: 200px solid var(--envelope-base);
             transform-origin: top;
             z-index: 4;
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+            background-image: var(--paper-texture);
+            filter: drop-shadow(0 8px 6px rgba(0,0,0,0.3));
 
-            /* Scroll Animation to flip open */
             animation: openFlap linear both;
             animation-timeline: scroll(root);
-            animation-range: exit-crossing 0% exit-crossing 20%;
+            animation-range: exit-crossing 0% exit-crossing 15%;
         }
 
-        /* Digital Wax Seal Stamp */
         .wax-seal {
             position: absolute;
             top: 175px;
@@ -105,259 +106,7 @@
             font-size: 1.5rem;
             font-weight: bold;
             border: 2px dashed rgba(255,255,255,0.2);
-            cursor: pointer;
-            transform-origin: center;
 
-            /* Scroll Animation to drop away */
             animation: breakSeal linear both;
             animation-timeline: scroll(root);
-            animation-range: exit-crossing 0% exit-crossing 15%;
-        }
-
-        .scroll-hint {
-            position: absolute;
-            bottom: -60px;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--accent-gold);
-            opacity: 0.7;
-            animation: pulse 2s infinite;
-        }
-
-        /* --- THE WEDDING INVITATION CARD --- */
-        .invitation-card {
-            position: absolute;
-            background: #F9F6F0; /* Soft Off-White */
-            color: var(--text-dark);
-            width: 420px;
-            height: 520px;
-            padding: 40px 30px;
-            border-radius: 4px;
-            text-align: center;
-            border: 2px double var(--accent-gold);
-            z-index: 2;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            overflow: hidden;
-
-            /* Scroll Animation to lift out of envelope */
-            animation: pullCard linear both;
-            animation-timeline: scroll(root);
-            animation-range: exit-crossing 15% exit-crossing 50%;
-        }
-
-        /* Inner cultural frames */
-        .invitation-card::before {
-            content: "";
-            position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid rgba(227, 94, 37, 0.3);
-            pointer-events: none;
-        }
-
-        /* --- STAGED CONTENT REVEALS --- */
-        /* Each section remains invisible until a specific scroll depth */
-        .reveal-section {
-            animation: fadeContent linear both;
-            animation-timeline: scroll(root);
-        }
-
-        /* Section 1: Names */
-        .sec-names {
-            animation-range: exit-crossing 35% exit-crossing 55%;
-        }
-        /* Section 2: Date */
-        .sec-date {
-            animation-range: exit-crossing 55% exit-crossing 75%;
-        }
-        /* Section 3: Venue */
-        .sec-venue {
-            animation-range: exit-crossing 75% exit-crossing 95%;
-        }
-
-        /* --- CARD TYPOGRAPHY & ELEMENTS --- */
-        .header-badge {
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--accent-saffron);
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .couple-names {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 2.2rem;
-            color: var(--bg-tropical);
-            line-height: 1.2;
-        }
-
-        .ampersand {
-            font-family: 'Pinyon Script', cursive;
-            font-size: 3.2rem;
-            display: block;
-            color: var(--accent-gold);
-            margin: -5px 0;
-        }
-
-        .cultural-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px auto;
-            width: 60%;
-        }
-
-        .cultural-divider::before, .cultural-divider::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
-        }
-
-        .motif-center {
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-saffron);
-            transform: rotate(45deg);
-            margin: 0 10px;
-            box-shadow: 0 0 0 3px var(--accent-gold);
-        }
-
-        .details-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #666;
-            margin-bottom: 3px;
-            margin-top: 15px;
-        }
-
-        .date-time {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .location-venue {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--bg-tropical);
-        }
-
-        .location-address {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: #555;
-        }
-
-        /* --- ANIMATION KEYFRAMES --- */
-        @keyframes openFlap {
-            to {
-                transform: rotateX(180deg);
-                z-index: 1; /* Move behind card once open */
-                border-top-color: #051d1a;
-            }
-        }
-
-        @keyframes breakSeal {
-            to {
-                transform: translateY(-100px) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        @keyframes pullCard {
-            to {
-                transform: translateY(-250px); /* Lift card straight up */
-                height: 560px; /* Expand slightly to fit layout cleanly */
-                z-index: 10;
-            }
-        }
-
-        @keyframes scaleEnvelope {
-            to {
-                transform: scale(0.95) translateY(100px);
-            }
-        }
-
-        @keyframes fadeContent {
-            from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; transform: translateY(0); }
-            50% { opacity: 1; transform: translateY(-5px); }
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 480px) {
-            .envelope-wrapper { width: 320px; height: 420px; }
-            .envelope-flap { border-left-width: 160px; border-right-width: 160px; border-top-width: 150px; }
-            .wax-seal { top: 125px; left: calc(50% - 25px); width: 50px; height: 50px; font-size: 1.1rem; }
-            .invitation-card { width: 300px; height: 400px; padding: 25px 15px; }
-            @keyframes pullCard { to { transform: translateY(-160px); z-index: 10; } }
-            .couple-names { font-size: 1.7rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- The scrolling container track -->
-    <div class="scroll-space">
-        
-        <!-- Fixed Viewport viewport -->
-        <div class="viewport-lock">
-            
-            <!-- The Envelope Container -->
-            <div class="envelope-wrapper">
-                <div class="envelope-flap"></div>
-                
-                <!-- Wax Seal representing their initials -->
-                <div class="wax-seal">SN</div>
-                
-                <!-- The Invitation Content Card Hidden Inside -->
-                <div class="invitation-card">
-                    
-                    <!-- REVEAL SECTION 1: Names -->
-                    <div class="reveal-section sec-names">
-                        <p class="header-badge">Together with their families</p>
-                        <h1 class="couple-names">
-                            Srushti <span class="ampersand">&</span> Neil
-                        </h1>
-                        <div class="cultural-divider">
-                            <div class="motif-center"></div>
-                        </div>
-                    </div>
-
-                    <!-- REVEAL SECTION 2: Date -->
-                    <div class="reveal-section sec-date">
-                        <p class="details-label">Save The Date</p>
-                        <p class="date-time">Saturday, 12th December 2026</p>
-                        <div class="cultural-divider" style="width: 30%;">
-                            <div class="motif-center" style="background-color: var(--accent-gold); box-shadow: none; width: 4px; height: 4px;"></div>
-                        </div>
-                    </div>
-
-                    <!-- REVEAL SECTION 3: Venue -->
-                    <div class="reveal-section sec-venue">
-                        <p class="details-label">The Venue</p>
-                        <p class="location-venue">Village Canopy</p>
-                        <p class="location-address">
-                            Kallanchery Rd, North Kumbalangi,<br>
-                            Kumbalangi, Kochi, Kerala
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="scroll-hint">↓ Scroll to open</div>
-            </div>
-
-        </div>
-    </div>
-
-</body>
-</html>
+            animation-range: exit-crossing 0% exit-crossing 10%;
