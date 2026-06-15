@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Srushti & Neil's Wedding Invitation</title>
-    <!-- Google Fonts for Elegant Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Pinyon+Script&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Color Palette & Variables --- */
         :root {
-            --bg-tropical: #0B3C37; /* Deep Kerala Tropical Teal/Green */
+            --bg-tropical: #0B3C37; /* Deep Kerala Tropical Teal */
             --accent-gold: #D4AF37; /* Royal Marigold Gold */
-            --accent-saffron: #E35E25; /* Maharashtrian Saffron/Orange */
-            --text-light: #F9F6F0; /* Soft Off-White */
+            --accent-saffron: #E35E25; /* Maharashtrian Saffron */
             --text-dark: #1A332E;
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --envelope-color: #082b27;
+            --envelope-flap: #0c443e;
         }
 
         * {
@@ -28,112 +26,186 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-tropical);
-            color: var(--text-light);
-            min-height: 100vh;
+            background-color: #051a18;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Create artificial scrolling height to power the animations */
+        .scroll-space {
+            height: 400vh; 
+            position: relative;
+        }
+
+        /* The viewport container that stays fixed while you scroll */
+        .viewport-lock {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
-            background-image: 
-                linear-gradient(135deg, rgba(11, 60, 55, 0.95) 0%, rgba(7, 41, 37, 0.98) 100%);
-        }
-
-        /* --- Cultural Graphical Accents (CSS Art) --- */
-        .background-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 1;
+            background: radial-gradient(circle, var(--bg-tropical) 0%, #051a18 100%);
             overflow: hidden;
         }
 
-        /* Palm Frond Silhouette (Kerala/Coastal vibe) */
-        .palm-leaves {
-            position: absolute;
-            bottom: -50px;
-            right: -50px;
-            width: 300px;
-            height: 300px;
-            opacity: 0.15;
-            background: radial-gradient(circle, transparent 40%, var(--accent-gold) 100%);
-            border-radius: 50%;
-        }
-
-        /* --- Main Invitation Card --- */
-        .invitation-container {
+        /* --- THE ENVELOPE --- */
+        .envelope-wrapper {
             position: relative;
-            z-index: 2;
-            background-color: var(--card-bg);
-            color: var(--text-dark);
-            max-width: 600px;
-            width: 100%;
-            padding: 50px 40px;
-            text-align: center;
-            border-radius: 4px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border: 3px double var(--accent-gold);
-            outline: 15px solid rgba(255, 255, 255, 0.05);
+            width: 450px;
+            height: 550px;
+            background-color: var(--envelope-color);
+            border-radius: 8px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            
+            /* Scroll Animation to fade/shrink envelope slightly as card pulls out */
+            animation: scaleEnvelope linear both;
+            animation-timeline: scroll(root);
+            animation-range: exit-crossing 20% exit-crossing 60%;
         }
 
-        /* --- Traditional Border Details (Marigold/Toran Inspired) --- */
-        .invitation-container::before {
+        /* Envelope Top Flap */
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0; width: 0; height: 0;
+            border-left: 225px solid transparent;
+            border-right: 225px solid transparent;
+            border-top: 200px solid var(--envelope-flap);
+            transform-origin: top;
+            z-index: 4;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+
+            /* Scroll Animation to flip open */
+            animation: openFlap linear both;
+            animation-timeline: scroll(root);
+            animation-range: exit-crossing 0% exit-crossing 20%;
+        }
+
+        /* Digital Wax Seal Stamp */
+        .wax-seal {
+            position: absolute;
+            top: 175px;
+            left: calc(50% - 35px);
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #ff3b30 0%, #b81414 100%);
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 0 8px rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent-gold);
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 2px dashed rgba(255,255,255,0.2);
+            cursor: pointer;
+            transform-origin: center;
+
+            /* Scroll Animation to drop away */
+            animation: breakSeal linear both;
+            animation-timeline: scroll(root);
+            animation-range: exit-crossing 0% exit-crossing 15%;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: -60px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+        }
+
+        /* --- THE WEDDING INVITATION CARD --- */
+        .invitation-card {
+            position: absolute;
+            background: #F9F6F0; /* Soft Off-White */
+            color: var(--text-dark);
+            width: 420px;
+            height: 520px;
+            padding: 40px 30px;
+            border-radius: 4px;
+            text-align: center;
+            border: 2px double var(--accent-gold);
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            overflow: hidden;
+
+            /* Scroll Animation to lift out of envelope */
+            animation: pullCard linear both;
+            animation-timeline: scroll(root);
+            animation-range: exit-crossing 15% exit-crossing 50%;
+        }
+
+        /* Inner cultural frames */
+        .invitation-card::before {
             content: "";
             position: absolute;
             top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid rgba(227, 94, 37, 0.3); /* Saffron inner line */
+            border: 1px solid rgba(227, 94, 37, 0.3);
             pointer-events: none;
         }
 
-        /* Culture Motif: Border Corners inspired by traditional motifs */
-        .corner-motif {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border: 2px solid var(--accent-gold);
+        /* --- STAGED CONTENT REVEALS --- */
+        /* Each section remains invisible until a specific scroll depth */
+        .reveal-section {
+            animation: fadeContent linear both;
+            animation-timeline: scroll(root);
         }
-        .top-left { top: 15px; left: 15px; border-right: none; border-bottom: none; }
-        .top-right { top: 15px; right: 15px; border-left: none; border-bottom: none; }
-        .bottom-left { bottom: 15px; left: 15px; border-right: none; border-top: none; }
-        .bottom-right { bottom: 15px; right: 15px; border-left: none; border-top: none; }
 
-        /* --- Typography --- */
+        /* Section 1: Names */
+        .sec-names {
+            animation-range: exit-crossing 35% exit-crossing 55%;
+        }
+        /* Section 2: Date */
+        .sec-date {
+            animation-range: exit-crossing 55% exit-crossing 75%;
+        }
+        /* Section 3: Venue */
+        .sec-venue {
+            animation-range: exit-crossing 75% exit-crossing 95%;
+        }
+
+        /* --- CARD TYPOGRAPHY & ELEMENTS --- */
         .header-badge {
-            font-size: 0.85rem;
-            letter-spacing: 4px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--accent-saffron);
             font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
 
         .couple-names {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             color: var(--bg-tropical);
-            margin: 20px 0;
             line-height: 1.2;
-            font-weight: 700;
         }
 
         .ampersand {
             font-family: 'Pinyon Script', cursive;
-            font-size: 4rem;
+            font-size: 3.2rem;
             display: block;
             color: var(--accent-gold);
-            margin: -10px 0;
+            margin: -5px 0;
         }
 
         .cultural-divider {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 30px auto;
-            width: 80%;
+            margin: 20px auto;
+            width: 60%;
         }
 
         .cultural-divider::before, .cultural-divider::after {
@@ -143,103 +215,147 @@
             background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
         }
 
-        /* Simple geometric representation of a festive marigold/paisley center */
         .motif-center {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background-color: var(--accent-saffron);
             transform: rotate(45deg);
-            margin: 0 15px;
-            box-shadow: 0 0 0 4px var(--accent-gold);
+            margin: 0 10px;
+            box-shadow: 0 0 0 3px var(--accent-gold);
         }
 
         .details-label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #777;
-            margin-bottom: 5px;
+            letter-spacing: 2px;
+            color: #666;
+            margin-bottom: 3px;
+            margin-top: 15px;
         }
 
         .date-time {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: var(--text-dark);
             font-weight: 600;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
         }
 
         .location-venue {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--bg-tropical);
-            margin-bottom: 8px;
         }
 
         .location-address {
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-size: 0.85rem;
+            line-height: 1.5;
             color: #555;
-            max-width: 80%;
-            margin: 0 auto 30px auto;
         }
 
-        /* --- Media Queries for Mobile Responsiveness --- */
+        /* --- ANIMATION KEYFRAMES --- */
+        @keyframes openFlap {
+            to {
+                transform: rotateX(180deg);
+                z-index: 1; /* Move behind card once open */
+                border-top-color: #051d1a;
+            }
+        }
+
+        @keyframes breakSeal {
+            to {
+                transform: translateY(-100px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pullCard {
+            to {
+                transform: translateY(-250px); /* Lift card straight up */
+                height: 560px; /* Expand slightly to fit layout cleanly */
+                z-index: 10;
+            }
+        }
+
+        @keyframes scaleEnvelope {
+            to {
+                transform: scale(0.95) translateY(100px);
+            }
+        }
+
+        @keyframes fadeContent {
+            from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-5px); }
+        }
+
+        /* Mobile Adjustments */
         @media (max-width: 480px) {
-            .invitation-container {
-                padding: 40px 20px;
-            }
-            .couple-names {
-                font-size: 2.2rem;
-            }
-            .ampersand {
-                font-size: 3.2rem;
-            }
-            .date-time {
-                font-size: 1.1rem;
-            }
+            .envelope-wrapper { width: 320px; height: 420px; }
+            .envelope-flap { border-left-width: 160px; border-right-width: 160px; border-top-width: 150px; }
+            .wax-seal { top: 125px; left: calc(50% - 25px); width: 50px; height: 50px; font-size: 1.1rem; }
+            .invitation-card { width: 300px; height: 400px; padding: 25px 15px; }
+            @keyframes pullCard { to { transform: translateY(-160px); z-index: 10; } }
+            .couple-names { font-size: 1.7rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="background-elements">
-        <div class="palm-leaves"></div>
-    </div>
-
-    <div class="invitation-container">
-        <!-- Cultural Corner Accents -->
-        <div class="corner-motif top-left"></div>
-        <div class="corner-motif top-right"></div>
-        <div class="corner-motif bottom-left"></div>
-        <div class="corner-motif bottom-right"></div>
-
-        <!-- Invitation Content -->
-        <p class="header-badge">Together with their families</p>
+    <!-- The scrolling container track -->
+    <div class="scroll-space">
         
-        <h1 class="couple-names">
-            Srushti 
-            <span class="ampersand">&</span> 
-            Neil
-        </h1>
+        <!-- Fixed Viewport viewport -->
+        <div class="viewport-lock">
+            
+            <!-- The Envelope Container -->
+            <div class="envelope-wrapper">
+                <div class="envelope-flap"></div>
+                
+                <!-- Wax Seal representing their initials -->
+                <div class="wax-seal">SN</div>
+                
+                <!-- The Invitation Content Card Hidden Inside -->
+                <div class="invitation-card">
+                    
+                    <!-- REVEAL SECTION 1: Names -->
+                    <div class="reveal-section sec-names">
+                        <p class="header-badge">Together with their families</p>
+                        <h1 class="couple-names">
+                            Srushti <span class="ampersand">&</span> Neil
+                        </h1>
+                        <div class="cultural-divider">
+                            <div class="motif-center"></div>
+                        </div>
+                    </div>
 
-        <div class="cultural-divider">
-            <div class="motif-center"></div>
-        </div>
+                    <!-- REVEAL SECTION 2: Date -->
+                    <div class="reveal-section sec-date">
+                        <p class="details-label">Save The Date</p>
+                        <p class="date-time">Saturday, 12th December 2026</p>
+                        <div class="cultural-divider" style="width: 30%;">
+                            <div class="motif-center" style="background-color: var(--accent-gold); box-shadow: none; width: 4px; height: 4px;"></div>
+                        </div>
+                    </div>
 
-        <p class="details-label">Save The Date</p>
-        <p class="date-time">Saturday, 12th December 2026</p>
+                    <!-- REVEAL SECTION 3: Venue -->
+                    <div class="reveal-section sec-venue">
+                        <p class="details-label">The Venue</p>
+                        <p class="location-venue">Village Canopy</p>
+                        <p class="location-address">
+                            Kallanchery Rd, North Kumbalangi,<br>
+                            Kumbalangi, Kochi, Kerala
+                        </p>
+                    </div>
 
-        <p class="details-label">The Venue</p>
-        <p class="location-venue">Village Canopy</p>
-        <p class="location-address">
-            Kallanchery Rd, North Kumbalangi, Kumbalangi, Kochi,<br>
-            Kerala 682007, India
-        </p>
+                </div>
 
-        <div class="cultural-divider" style="width: 40%;">
-            <div class="motif-center" style="background-color: var(--accent-gold); box-shadow: none; width: 6px; height: 6px;"></div>
+                <div class="scroll-hint">↓ Scroll to open</div>
+            </div>
+
         </div>
     </div>
 
