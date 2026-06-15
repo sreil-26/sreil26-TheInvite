@@ -16,7 +16,7 @@
             --text-dark: #1A332E;
             --envelope-base: #0c4a44;
             
-            /* Textured Paper SVG Grounding */
+            /* Realistic paper texture */
             --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
         }
 
@@ -33,37 +33,42 @@
             overflow-x: hidden;
         }
 
-        /* Continuous scroll container */
-        .scroll-container {
+        /* The overall track height to allow the page to actually scroll */
+        .scroll-space {
+            position: relative;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            height: 380vh; /* Determines scroll longevity */
         }
 
-        /* --- STAGE 1: THE ENVELOPE OPENING --- */
+        /* --- STAGE 1: THE PINNED ENVELOPE --- */
+        /* Changed to fixed positioning so it freezes in the center of the viewport */
         .envelope-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
             height: 100vh;
-            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
+            z-index: 100;
             perspective: 1500px;
+            background: radial-gradient(circle, var(--bg-tropical) 0%, #051a18 100%);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
+            pointer-events: none; /* Stops it from blocking clicks to elements beneath when faded */
         }
 
-        .envelope-sticky {
+        .envelope-card {
             position: relative;
             width: 450px;
             height: 550px;
             background-color: var(--envelope-base);
             background-image: var(--paper-texture);
             border-radius: 6px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
         }
 
         .envelope-flap {
@@ -76,7 +81,7 @@
             z-index: 4;
             background-image: var(--paper-texture);
             filter: drop-shadow(0 8px 6px rgba(0,0,0,0.3));
-            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), border-top-color 1s ease, z-index 0s linear 0.4s;
+            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), border-top-color 1s ease;
         }
 
         .wax-seal {
@@ -111,7 +116,7 @@
             animation: pulse 2s infinite;
         }
 
-        /* --- JAVASCRIPT DRIVEN ACTIVE STATES --- */
+        /* --- ACTIVE STATES TRIGGERED BY WINDOW SCROLL --- */
         body.is-scrolled .envelope-flap {
             transform: rotateX(180deg);
             z-index: 1;
@@ -119,231 +124,4 @@
         }
 
         body.is-scrolled .wax-seal {
-            transform: translateY(-60px) scale(0.5);
-            opacity: 0;
-        }
-
-        body.is-scrolled-deep .envelope-sticky {
-            transform: translateY(15vh) scale(0.85);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* --- STAGE 2: THE REVEAL CONTENT FLOW --- */
-        .content-section {
-            width: 100%;
-            max-width: 650px;
-            min-height: 90vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Clean panel state matching your Save the Date mechanics */
-        .invitation-panel {
-            background: #F9F6F0;
-            background-image: var(--paper-texture);
-            color: var(--text-dark);
-            width: 100%;
-            padding: 60px 40px;
-            border-radius: 4px;
-            text-align: center;
-            border: 2px double var(--accent-gold);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            position: relative;
-            
-            /* Initial State (Hidden) */
-            opacity: 0;
-            transform: translateY(80px) scale(0.96);
-            filter: blur(4px);
-            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
-                        transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
-                        filter 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        /* Triggered active state when element scrolls onto screen */
-        .invitation-panel.reveal-active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-        }
-
-        .invitation-panel::before {
-            content: "";
-            position: absolute;
-            top: 15px; left: 15px; right: 15px; bottom: 15px;
-            border: 1px solid rgba(227, 94, 37, 0.25);
-            pointer-events: none;
-        }
-
-        /* --- TYPOGRAPHY & MOTIFS --- */
-        .header-badge {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--accent-saffron);
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .couple-names {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 2.8rem;
-            color: var(--bg-tropical);
-            line-height: 1.2;
-            font-weight: 700;
-        }
-
-        .ampersand {
-            font-family: 'Pinyon Script', cursive;
-            font-size: 4rem;
-            display: block;
-            color: var(--accent-gold);
-            margin: -5px 0;
-        }
-
-        .cultural-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 25px auto;
-            width: 70%;
-        }
-
-        .cultural-divider::before, .cultural-divider::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
-        }
-
-        .motif-center {
-            width: 12px;
-            height: 12px;
-            background-color: var(--accent-saffron);
-            transform: rotate(45deg);
-            margin: 0 12px;
-            box-shadow: 0 0 0 3px var(--accent-gold);
-        }
-
-        .details-label {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .date-time {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 1.4rem;
-            color: var(--text-dark);
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .location-venue {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--bg-tropical);
-            margin-bottom: 5px;
-        }
-
-        .location-address {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #444;
-            max-width: 85%;
-            margin: 0 auto;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; transform: translateY(0); }
-            50% { opacity: 1; transform: translateY(-5px); }
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 480px) {
-            .envelope-sticky { width: 320px; height: 420px; }
-            .envelope-flap { border-left-width: 160px; border-right-width: 160px; border-top-width: 150px; }
-            .wax-seal { top: 125px; left: calc(50% - 25px); width: 50px; height: 50px; font-size: 1.1rem; }
-            .couple-names { font-size: 2.1rem; }
-            .ampersand { font-size: 3.2rem; }
-            .date-time { font-size: 1.1rem; }
-            .invitation-panel { padding: 40px 20px; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="scroll-container">
-        
-        <section class="envelope-section">
-            <div class="envelope-sticky">
-                <div class="envelope-flap"></div>
-                <div class="wax-seal">SN</div>
-                <div class="scroll-hint">↓ Scroll to open</div>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <div class="invitation-panel">
-                <p class="header-badge">Together with their families</p>
-                <h1 class="couple-names">
-                    Srushti <span class="ampersand">&</span> Neil
-                </h1>
-                <div class="cultural-divider">
-                    <div class="motif-center"></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <div class="invitation-panel">
-                <p class="details-label">Save The Date</p>
-                <p class="date-time">Saturday, 12th December 2026</p>
-                <div class="cultural-divider" style="width: 35%;">
-                    <div class="motif-center" style="background-color: var(--accent-gold); box-shadow: none; width: 5px; height: 5px;"></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <div class="invitation-panel">
-                <p class="details-label">The Venue</p>
-                <p class="location-venue">Village Canopy</p>
-                <p class="location-address">
-                    Kallanchery Rd, North Kumbalangi,<br>
-                    Kumbalangi, Kochi, Kerala 682007
-                </p>
-            </div>
-        </section>
-
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            
-            // 1. Handle Envelope States Based on Scroll Depth
-            window.addEventListener("scroll", () => {
-                const scrollPos = window.scrollY;
-                
-                // Open the envelope early on scroll
-                if (scrollPos > 40) {
-                    document.body.classList.add("is-scrolled");
-                } else {
-                    document.body.classList.remove("is-scrolled");
-                }
-
-                // Hide the envelope completely as we approach the card content
-                if (scrollPos > 300) {
-                    document.body.classList.add("is-scrolled-deep");
-                } else {
-                    document.body.classList.remove("is-scrolled-deep");
-                }
-            });
-
-            // 2. Intersection Observer to flawlessly handle
+            transform:
