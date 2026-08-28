@@ -77,22 +77,6 @@
       text-decoration: none;
       text-transform: uppercase;
     }
-    .nav-links .pill {
-      padding: 10px 16px;
-      border: 1px solid var(--gold);
-      border-radius: 99px;
-      background: var(--gold);
-      color: var(--ink);
-      font-weight: 700;
-      box-shadow: 0 8px 22px rgba(32, 21, 13, .22);
-      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-    }
-    .nav-links .pill:hover {
-      background: var(--paper-2);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(32, 21, 13, .28);
-    }
-
     .hero {
       position: relative;
       min-height: 100svh;
@@ -251,38 +235,23 @@
     details[open] summary::after { content: "−"; }
     details p { padding: 0 30px 24px 0; color: rgba(32,21,13,.64); line-height: 1.7; }
 
-    .rsvp {
+    .closing {
       position: relative;
       overflow: hidden;
       text-align: center;
       background: var(--orange);
       color: var(--paper-2);
     }
-    .rsvp::before {
+    .closing::before {
       content: "";
       position: absolute;
       inset: 26px;
       border: 1px solid rgba(255,250,240,.26);
       pointer-events: none;
     }
-    .rsvp .section-kicker { color: rgba(255,250,240,.65); }
-    .rsvp .section-heading { margin-bottom: 22px; }
-    .rsvp p { margin-bottom: 34px; color: rgba(255,250,240,.72); }
-    .button {
-      display: inline-block;
-      padding: 17px 34px;
-      border-radius: 99px;
-      background: var(--paper-2);
-      color: var(--ink);
-      text-decoration: none;
-      font-size: .74rem;
-      font-weight: 700;
-      letter-spacing: .24em;
-      text-transform: uppercase;
-      box-shadow: 0 12px 30px rgba(32,21,13,.18);
-      transition: transform .25s ease, box-shadow .25s ease;
-    }
-    .button:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(32,21,13,.25); }
+    .closing .section-kicker { color: rgba(255,250,240,.65); }
+    .closing .section-heading { margin-bottom: 22px; }
+    .closing p { margin-bottom: 0; color: rgba(255,250,240,.82); }
 
     footer { padding: 52px 24px; text-align: center; background: var(--ink); color: rgba(244,234,216,.55); }
     footer strong { display: block; margin-bottom: 10px; color: var(--gold); font: italic 400 1.8rem "Cormorant Garamond", serif; }
@@ -292,14 +261,9 @@
     .reveal.visible { opacity: 1; transform: none; }
 
     @media (max-width: 760px) {
-      .nav-links a:not(.pill):not(.events-link) { display: none; }
+      .nav-links a:not(.events-link) { display: none; }
       .nav-links { gap: 10px; }
       .nav-links .events-link {
-        font-size: .62rem;
-        letter-spacing: .1em;
-      }
-      .nav-links .pill {
-        padding: 9px 12px;
         font-size: .62rem;
         letter-spacing: .1em;
       }
@@ -310,7 +274,6 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .reveal { opacity: 1; transform: none; transition: none; }
-      .button { transition: none; }
     }
   </style>
 </head>
@@ -322,7 +285,6 @@
       <a href="#celebration">Celebration</a>
       <a class="events-link" href="#schedule">Order of events</a>
       <a href="#details">Guest notes</a>
-      <a class="pill" href="#rsvp">Confirm attendance</a>
     </div>
   </nav>
 
@@ -399,12 +361,11 @@
       </div>
     </section>
 
-    <section class="rsvp" id="rsvp">
+    <section class="closing" id="closing">
       <div class="reveal">
-        <p class="section-kicker">We hope you can join us</p>
-        <h2 class="section-heading"><em>Please let us know your plans</em></h2>
-        <p>Kindly confirm whether you’ll be with us by 15 July 2026.</p>
-        <a class="button" href="https://forms.gle/ELDzxq7gu96xSpcMA" id="rsvpLink" target="_blank" rel="noopener">Confirm your attendance</a>
+        <p class="section-kicker">With all our love</p>
+        <h2 class="section-heading"><em>We hope you can join us.</em></h2>
+        <p>Your presence would be the biggest gift to us!</p>
       </div>
     </section>
   </main>
@@ -435,12 +396,6 @@
     }, { threshold: .12 });
     document.querySelectorAll('.reveal').forEach((item) => observer.observe(item));
 
-    document.querySelector('#rsvpLink').addEventListener('click', (event) => {
-      if (event.currentTarget.getAttribute('href') === '#') {
-        event.preventDefault();
-        alert('Add your RSVP form link to the RSVP button before publishing.');
-      }
-    });
   </script>
 </body>
 </html>
