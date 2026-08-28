@@ -172,14 +172,43 @@
 
     .invitation-wrap { padding-top: 0; }
     .invitation {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
       max-width: 1080px;
       margin: auto;
       min-height: 700px;
-      background: var(--paper-2);
-      border: 1px solid rgba(32,21,13,.1);
-      box-shadow: var(--shadow);
+      background:
+        radial-gradient(circle at 8% 12%, rgba(217,154,69,.14), transparent 25%),
+        radial-gradient(circle at 94% 90%, rgba(49,95,101,.13), transparent 29%),
+        linear-gradient(145deg, #fffaf0 0%, #f9eedc 100%);
+      border: 1px solid rgba(201,86,43,.24);
+      box-shadow: var(--shadow), inset 0 0 0 18px rgba(255,250,240,.6);
+    }
+    .invitation::before {
+      content: "12";
+      position: absolute;
+      z-index: -1;
+      top: -.2em;
+      left: -.08em;
+      color: rgba(201,86,43,.055);
+      font: 300 clamp(17rem, 34vw, 29rem)/1 "Cormorant Garamond", serif;
+      letter-spacing: -.08em;
+    }
+    .invitation::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      right: -150px;
+      bottom: -160px;
+      width: 340px;
+      height: 340px;
+      border: 48px solid rgba(49,95,101,.1);
+      border-radius: 50%;
     }
     .invitation-copy {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -193,9 +222,64 @@
       margin-bottom: 22px;
       font: italic 300 clamp(3rem, 7vw, 5.4rem)/.92 "Cormorant Garamond", serif;
     }
-    .invitation-copy .date { margin: 18px 0; color: var(--orange); letter-spacing: .2em; text-transform: uppercase; }
+    .invitation-copy .date {
+      margin: 18px 0 28px;
+      color: var(--orange);
+      font-size: clamp(.82rem, 1.6vw, 1rem);
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
     .invitation-copy p { line-height: 1.85; color: rgba(32,21,13,.7); }
     .fine-line { width: 72px; height: 1px; margin: 20px auto; background: var(--gold); }
+    .venue-block {
+      width: min(100%, 570px);
+      margin: 0 auto;
+      padding: 26px 24px 28px;
+      border-top: 1px solid rgba(201,86,43,.24);
+      border-bottom: 1px solid rgba(201,86,43,.24);
+    }
+    .venue-block .venue-intro {
+      margin-bottom: 2px;
+      color: var(--orange);
+      font: italic 400 1.2rem "Cormorant Garamond", serif;
+    }
+    .venue-block .venue-name {
+      margin-bottom: 4px;
+      color: var(--ink);
+      font: 500 clamp(2.15rem, 4.5vw, 3.2rem)/1.05 "Cormorant Garamond", serif;
+    }
+    .venue-block .venue-address {
+      margin-bottom: 0;
+      color: rgba(32,21,13,.68);
+      font: 400 clamp(1rem, 1.9vw, 1.18rem)/1.55 "Cormorant Garamond", serif;
+    }
+    .celebration-details {
+      width: min(100%, 570px);
+      margin: 30px auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      align-items: center;
+      gap: 26px;
+    }
+    .celebration-details .detail-rule {
+      width: 1px;
+      height: 50px;
+      background: rgba(201,86,43,.26);
+    }
+    .celebration-details span {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--orange);
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+    }
+    .celebration-details strong {
+      color: var(--ink);
+      font: italic 400 clamp(1.35rem, 2.8vw, 1.75rem) "Cormorant Garamond", serif;
+    }
 
     .schedule { background: var(--sea); color: var(--paper-2); }
     .schedule-head { max-width: 1080px; margin: 0 auto 55px; text-align: center; }
@@ -326,6 +410,14 @@
       .invitation-copy {
         min-height: 620px;
       }
+      .invitation { box-shadow: var(--shadow), inset 0 0 0 10px rgba(255,250,240,.6); }
+      .invitation-copy { padding: 68px 32px; }
+      .celebration-details { grid-template-columns: 1fr; gap: 20px; }
+      .celebration-details .detail-rule {
+        width: 56px;
+        height: 1px;
+        margin: auto;
+      }
       .event { grid-template-columns: 1fr; gap: 8px; }
       .notes-grid { grid-template-columns: 1fr; }
     }
@@ -375,8 +467,16 @@
           <h2>For our wedding celebration</h2>
           <div class="fine-line"></div>
           <p class="date">Saturday · 12 December · 2026</p>
-          <p>at Village Canopy<br>Kallanchery Rd, North Kumbalangi, Kumbalangi</p>
-          <p>Ceremony at 4 o’clock<br>Dinner and dancing to follow</p>
+          <div class="venue-block">
+            <p class="venue-intro">at</p>
+            <p class="venue-name">Village Canopy</p>
+            <p class="venue-address">Kallanchery Rd, North Kumbalangi, Kumbalangi</p>
+          </div>
+          <div class="celebration-details">
+            <div><span>Ceremony</span><strong>4 o’clock</strong></div>
+            <div class="detail-rule" aria-hidden="true"></div>
+            <div><span>To follow</span><strong>Dinner &amp; dancing</strong></div>
+          </div>
         </div>
       </article>
     </section>
