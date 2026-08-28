@@ -6,11 +6,9 @@
   <meta name="theme-color" content="#f4ead8">
   <meta name="description" content="The wedding invitation of Srushti and Neil — 12 December 2026, Kochi, Kerala.">
   <title>Srushti & Neil — The Invitation</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --paper: #f4ead8;
@@ -20,18 +18,12 @@
       --gold: #d99a45;
       --coral: #dc7b61;
       --sea: #315f65;
-      --line: rgba(32, 21, 13, 0.18);
-      --shadow: 0 24px 70px rgba(32, 21, 13, 0.14);
+      --line: rgba(32, 21, 13, .18);
+      --shadow: 0 24px 70px rgba(32, 21, 13, .14);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       background: var(--paper);
@@ -40,37 +32,19 @@
       font-weight: 300;
       overflow-x: hidden;
     }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
 
-    a {
-      color: inherit;
-    }
-
-    button,
-    a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    :focus-visible {
-      outline: 3px solid var(--gold);
-      outline-offset: 4px;
-    }
-
-    /* Scroll progress line */
     .progress {
       position: fixed;
       inset: 0 auto auto 0;
       z-index: 100;
       width: 0;
       height: 3px;
-      background: linear-gradient(
-        90deg,
-        var(--coral),
-        var(--gold),
-        var(--orange)
-      );
+      background: linear-gradient(90deg, var(--coral), var(--gold), var(--orange));
     }
 
-    /* Navigation */
     .nav {
       position: fixed;
       z-index: 90;
@@ -83,42 +57,42 @@
       justify-content: space-between;
       padding: 0 clamp(20px, 5vw, 72px);
       color: var(--paper-2);
-      transition: 0.35s ease;
+      transition: .35s ease;
     }
-
     .nav.scrolled {
       color: var(--ink);
-      background: rgba(244, 234, 216, 0.9);
-      box-shadow: 0 8px 30px rgba(32, 21, 13, 0.08);
+      background: rgba(244, 234, 216, .9);
+      box-shadow: 0 8px 30px rgba(32, 21, 13, .08);
       backdrop-filter: blur(12px);
     }
-
     .brand {
       font: italic 400 1.5rem "Cormorant Garamond", serif;
       text-decoration: none;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
     }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-
+    .nav-links { display: flex; align-items: center; gap: 28px; }
     .nav-links a {
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
+      font-size: .7rem;
+      letter-spacing: .22em;
       text-decoration: none;
       text-transform: uppercase;
     }
-
     .nav-links .pill {
       padding: 10px 16px;
-      border: 1px solid currentColor;
+      border: 1px solid var(--gold);
       border-radius: 99px;
+      background: var(--gold);
+      color: var(--ink);
+      font-weight: 700;
+      box-shadow: 0 8px 22px rgba(32, 21, 13, .22);
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .nav-links .pill:hover {
+      background: var(--paper-2);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(32, 21, 13, .28);
     }
 
-    /* Hero */
     .hero {
       position: relative;
       min-height: 100svh;
@@ -128,101 +102,49 @@
       overflow: hidden;
       color: var(--paper-2);
       background:
-        radial-gradient(
-          circle at 12% 15%,
-          rgba(217, 154, 69, 0.32),
-          transparent 25%
-        ),
-        radial-gradient(
-          circle at 85% 78%,
-          rgba(220, 123, 97, 0.28),
-          transparent 28%
-        ),
-        linear-gradient(
-          145deg,
-          #1d1510 0%,
-          #4d2819 45%,
-          #9e4227 100%
-        );
+        radial-gradient(circle at 12% 15%, rgba(217,154,69,.32), transparent 25%),
+        radial-gradient(circle at 85% 78%, rgba(220,123,97,.28), transparent 28%),
+        linear-gradient(145deg, #1d1510 0%, #4d2819 45%, #9e4227 100%);
     }
-
     .sun {
       position: absolute;
       width: min(64vw, 620px);
       aspect-ratio: 1;
-      border: 1px solid rgba(255, 250, 240, 0.18);
+      border: 1px solid rgba(255,250,240,.18);
       border-radius: 50%;
     }
-
-    .sun::before,
-    .sun::after {
+    .sun::before, .sun::after {
       content: "";
       position: absolute;
       inset: 8%;
-      border: 1px solid rgba(255, 250, 240, 0.11);
+      border: 1px solid rgba(255,250,240,.11);
       border-radius: inherit;
     }
-
-    .sun::after {
-      inset: 17%;
-    }
-
-    .hero-copy {
-      position: relative;
-      z-index: 2;
-      max-width: 980px;
-      text-align: center;
-    }
-
-    .kicker,
-    .section-kicker {
+    .sun::after { inset: 17%; }
+    .hero-copy { position: relative; z-index: 2; max-width: 980px; text-align: center; }
+    .kicker, .section-kicker {
       margin: 0 0 22px;
-      font-size: 0.72rem;
-      letter-spacing: 0.42em;
+      font-size: .72rem;
+      letter-spacing: .42em;
       text-transform: uppercase;
     }
-
-    .kicker {
-      color: #f0bc72;
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
-
+    .kicker { color: #f0bc72; }
+    h1, h2, h3, p { margin-top: 0; }
     h1 {
       margin-bottom: 20px;
-      font: 300 clamp(4.5rem, 15vw, 10.5rem) / 0.82
-        "Cormorant Garamond", serif;
-      letter-spacing: -0.045em;
+      font: 300 clamp(4.5rem, 15vw, 10.5rem)/.82 "Cormorant Garamond", serif;
+      letter-spacing: -.045em;
     }
-
-    h1 span {
-      display: block;
-    }
-
-    h1 span + span {
-      margin-top: 0.08em;
-    }
-
-    h1 em {
-      color: #efad88;
-      font-size: 0.6em;
-      font-weight: 300;
-    }
-
+    h1 span { display: block; }
+    h1 span + span { margin-top: .08em; }
+    h1 em { color: #efad88; font-size: .6em; font-weight: 300; }
     .hero-date {
       margin: 28px 0 0;
-      color: rgba(255, 250, 240, 0.72);
-      font-size: clamp(0.8rem, 2vw, 1rem);
-      letter-spacing: 0.3em;
+      color: rgba(255,250,240,.72);
+      font-size: clamp(.8rem, 2vw, 1rem);
+      letter-spacing: .3em;
       text-transform: uppercase;
     }
-
-    /* Fixed S & N seal */
     .seal {
       position: fixed;
       z-index: 3;
@@ -235,66 +157,42 @@
       border-radius: 50%;
       background: var(--gold);
       color: var(--ink);
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 14px 36px rgba(0,0,0,.2);
       font: italic 500 1.35rem "Cormorant Garamond", serif;
       transform: rotate(-8deg);
     }
 
-    main section {
-      padding: clamp(80px, 12vw, 150px) 24px;
+    main section { padding: clamp(80px, 12vw, 150px) 24px; }
+    .intro { text-align: center; }
+    .intro-inner { max-width: 780px; margin: auto; }
+    .section-kicker { color: var(--orange); }
+    .intro h2, .section-heading {
+      font: 300 clamp(2.8rem, 7vw, 5.5rem)/.98 "Cormorant Garamond", serif;
     }
-
-    /* Introduction */
-    .intro {
-      text-align: center;
-    }
-
-    .intro-inner {
-      max-width: 780px;
-      margin: auto;
-    }
-
-    .section-kicker {
-      color: var(--orange);
-    }
-
-    .intro h2,
-    .section-heading {
-      font: 300 clamp(2.8rem, 7vw, 5.5rem) / 0.98
-        "Cormorant Garamond", serif;
-    }
-
     .intro .lead {
       max-width: 620px;
       margin: 30px auto 0;
-      color: rgba(32, 21, 13, 0.68);
-      font: italic 300 clamp(1.25rem, 3vw, 1.75rem) / 1.6
-        "Cormorant Garamond", serif;
+      color: rgba(32,21,13,.68);
+      font: italic 300 clamp(1.25rem, 3vw, 1.75rem)/1.6 "Cormorant Garamond", serif;
     }
 
-    /* Main invitation card */
-    .invitation-wrap {
-      padding-top: 0;
-    }
-
+    .invitation-wrap { padding-top: 0; }
     .invitation {
       max-width: 960px;
-      min-height: 600px;
       margin: auto;
       display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
+      grid-template-columns: .9fr 1.1fr;
+      min-height: 600px;
       background: var(--paper-2);
-      border: 1px solid rgba(32, 21, 13, 0.1);
+      border: 1px solid rgba(32,21,13,.1);
       box-shadow: var(--shadow);
     }
-
     .invitation-art {
       position: relative;
       overflow: hidden;
       min-height: 360px;
       background: var(--sea);
     }
-
     .invitation-art::before {
       content: "";
       position: absolute;
@@ -305,28 +203,25 @@
       border: 90px solid var(--coral);
       border-radius: 50%;
     }
-
     .invitation-art::after {
       content: "12";
       position: absolute;
       right: 28px;
       bottom: -28px;
-      color: rgba(244, 234, 216, 0.12);
+      color: rgba(244,234,216,.12);
       font: 300 15rem/1 "Cormorant Garamond", serif;
     }
-
     .art-label {
       position: absolute;
       z-index: 2;
       left: 36px;
       top: 38px;
       color: var(--paper-2);
-      font-size: 0.68rem;
-      letter-spacing: 0.35em;
+      font-size: .68rem;
+      letter-spacing: .35em;
       text-transform: uppercase;
       writing-mode: vertical-rl;
     }
-
     .invitation-copy {
       display: flex;
       flex-direction: column;
@@ -334,113 +229,36 @@
       padding: clamp(45px, 7vw, 86px);
       text-align: center;
     }
-
     .invitation-copy h2 {
       margin-bottom: 22px;
-      font: italic 300 clamp(2.4rem, 5vw, 4.3rem) / 0.92
-        "Cormorant Garamond", serif;
+      font: italic 300 clamp(2.4rem, 5vw, 4.3rem)/.92 "Cormorant Garamond", serif;
     }
+    .invitation-copy .date { margin: 18px 0; color: var(--orange); letter-spacing: .2em; text-transform: uppercase; }
+    .invitation-copy p { line-height: 1.85; color: rgba(32,21,13,.7); }
+    .fine-line { width: 72px; height: 1px; margin: 20px auto; background: var(--gold); }
 
-    .invitation-copy .date {
-      margin: 18px 0;
-      color: var(--orange);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .invitation-copy p {
-      line-height: 1.85;
-      color: rgba(32, 21, 13, 0.7);
-    }
-
-    .fine-line {
-      width: 72px;
-      height: 1px;
-      margin: 20px auto;
-      background: var(--gold);
-    }
-
-    /* Schedule */
-    .schedule {
-      background: var(--sea);
-      color: var(--paper-2);
-    }
-
-    .schedule-head {
-      max-width: 1080px;
-      margin: 0 auto 55px;
-      text-align: center;
-    }
-
-    .schedule .section-kicker {
-      color: #efbd77;
-    }
-
-    .timeline {
-      max-width: 940px;
-      margin: auto;
-      border-top: 1px solid rgba(244, 234, 216, 0.28);
-    }
-
+    .schedule { background: var(--sea); color: var(--paper-2); }
+    .schedule-head { max-width: 1080px; margin: 0 auto 55px; text-align: center; }
+    .schedule .section-kicker { color: #efbd77; }
+    .timeline { max-width: 940px; margin: auto; border-top: 1px solid rgba(244,234,216,.28); }
     .event {
       display: grid;
       grid-template-columns: 160px 1fr auto;
       gap: 32px;
       align-items: center;
       padding: 32px 0;
-      border-bottom: 1px solid rgba(244, 234, 216, 0.22);
+      border-bottom: 1px solid rgba(244,234,216,.22);
     }
+    .event time { color: #f0bd78; font-size: .78rem; letter-spacing: .22em; text-transform: uppercase; }
+    .event h3 { margin: 0; font: 300 clamp(1.8rem, 4vw, 2.7rem) "Cormorant Garamond", serif; }
+    .event p { margin: 0; color: rgba(244,234,216,.62); font-size: .9rem; }
 
-    .event time {
-      color: #f0bd78;
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
-
-    .event h3 {
-      margin: 0;
-      font: 300 clamp(1.8rem, 4vw, 2.7rem)
-        "Cormorant Garamond", serif;
-    }
-
-    .event p {
-      margin: 0;
-      color: rgba(244, 234, 216, 0.62);
-      font-size: 0.9rem;
-    }
-
-    /* Guest information */
-    .notes {
-      background: var(--paper-2);
-    }
-
-    .notes-grid {
-      max-width: 1080px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(50px, 8vw, 100px);
-    }
-
-    .notes-copy .section-heading {
-      max-width: 460px;
-    }
-
-    .notes-copy > p {
-      max-width: 480px;
-      color: rgba(32, 21, 13, 0.65);
-      line-height: 1.8;
-    }
-
-    .note-list {
-      border-top: 1px solid var(--line);
-    }
-
-    details {
-      border-bottom: 1px solid var(--line);
-    }
-
+    .notes { background: var(--paper-2); }
+    .notes-grid { max-width: 1080px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(50px, 8vw, 100px); }
+    .notes-copy .section-heading { max-width: 460px; }
+    .notes-copy > p { max-width: 480px; color: rgba(32,21,13,.65); line-height: 1.8; }
+    .note-list { border-top: 1px solid var(--line); }
+    details { border-bottom: 1px solid var(--line); }
     summary {
       cursor: pointer;
       list-style: none;
@@ -450,28 +268,11 @@
       padding: 24px 0;
       font: 400 1.45rem "Cormorant Garamond", serif;
     }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--orange); font: 300 1.7rem/1 "Jost", sans-serif; }
+    details[open] summary::after { content: "−"; }
+    details p { padding: 0 30px 24px 0; color: rgba(32,21,13,.64); line-height: 1.7; }
 
-    summary::-webkit-details-marker {
-      display: none;
-    }
-
-    summary::after {
-      content: "+";
-      color: var(--orange);
-      font: 300 1.7rem/1 "Jost", sans-serif;
-    }
-
-    details[open] summary::after {
-      content: "−";
-    }
-
-    details p {
-      padding: 0 30px 24px 0;
-      color: rgba(32, 21, 13, 0.64);
-      line-height: 1.7;
-    }
-
-    /* Confirmation section */
     .rsvp {
       position: relative;
       overflow: hidden;
@@ -479,28 +280,16 @@
       background: var(--orange);
       color: var(--paper-2);
     }
-
     .rsvp::before {
       content: "";
       position: absolute;
       inset: 26px;
-      border: 1px solid rgba(255, 250, 240, 0.26);
+      border: 1px solid rgba(255,250,240,.26);
       pointer-events: none;
     }
-
-    .rsvp .section-kicker {
-      color: rgba(255, 250, 240, 0.65);
-    }
-
-    .rsvp .section-heading {
-      margin-bottom: 22px;
-    }
-
-    .rsvp p {
-      margin-bottom: 34px;
-      color: rgba(255, 250, 240, 0.72);
-    }
-
+    .rsvp .section-kicker { color: rgba(255,250,240,.65); }
+    .rsvp .section-heading { margin-bottom: 22px; }
+    .rsvp p { margin-bottom: 34px; color: rgba(255,250,240,.72); }
     .button {
       display: inline-block;
       padding: 17px 34px;
@@ -508,112 +297,53 @@
       background: var(--paper-2);
       color: var(--ink);
       text-decoration: none;
-      font-size: 0.74rem;
-      font-weight: 500;
-      letter-spacing: 0.24em;
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .24em;
       text-transform: uppercase;
-      box-shadow: 0 12px 30px rgba(32, 21, 13, 0.18);
-      transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+      box-shadow: 0 12px 30px rgba(32,21,13,.18);
+      transition: transform .25s ease, box-shadow .25s ease;
     }
+    .button:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(32,21,13,.25); }
 
-    .button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 40px rgba(32, 21, 13, 0.25);
-    }
+    footer { padding: 52px 24px; text-align: center; background: var(--ink); color: rgba(244,234,216,.55); }
+    footer strong { display: block; margin-bottom: 10px; color: var(--gold); font: italic 400 1.8rem "Cormorant Garamond", serif; }
+    footer span { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; }
 
-    /* Footer */
-    footer {
-      padding: 52px 24px;
-      text-align: center;
-      background: var(--ink);
-      color: rgba(244, 234, 216, 0.55);
-    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+    .reveal.visible { opacity: 1; transform: none; }
 
-    footer strong {
-      display: block;
-      margin-bottom: 10px;
-      color: var(--gold);
-      font: italic 400 1.8rem "Cormorant Garamond", serif;
-    }
-
-    footer span {
-      font-size: 0.68rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
-
-    /* Scroll reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition:
-        opacity 0.8s ease,
-        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* Mobile layout */
     @media (max-width: 760px) {
-      .nav-links a:not(.pill) {
-        display: none;
+      .nav-links a:not(.pill):not(.events-link) { display: none; }
+      .nav-links { gap: 10px; }
+      .nav-links .events-link {
+        font-size: .62rem;
+        letter-spacing: .1em;
       }
-
       .nav-links .pill {
         padding: 9px 12px;
-        letter-spacing: 0.14em;
+        font-size: .62rem;
+        letter-spacing: .1em;
       }
-
-      .invitation {
-        grid-template-columns: 1fr;
-      }
-
-      .event {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-
-      .notes-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .seal {
-        width: 76px;
-        right: 22px;
-      }
+      .invitation { grid-template-columns: 1fr; }
+      .event { grid-template-columns: 1fr; gap: 8px; }
+      .notes-grid { grid-template-columns: 1fr; }
+      .seal { width: 76px; right: 22px; }
     }
-
     @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-      }
-
-      .button {
-        transition: none;
-      }
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .button { transition: none; }
     }
   </style>
 </head>
-
 <body>
   <div class="progress" id="progress" aria-hidden="true"></div>
-
   <nav class="nav" id="nav" aria-label="Main navigation">
     <a class="brand" href="#top">S &amp; N</a>
-
     <div class="nav-links">
       <a href="#celebration">Celebration</a>
+      <a class="events-link" href="#schedule">Order of events</a>
       <a href="#details">Guest notes</a>
       <a class="pill" href="#rsvp">Confirm attendance</a>
     </div>
@@ -621,20 +351,11 @@
 
   <header class="hero" id="top">
     <div class="sun" aria-hidden="true"></div>
-
     <div class="hero-copy">
       <p class="kicker reveal">Together with our families</p>
-
-      <h1 class="reveal">
-        <span>Srushti <em>&amp;</em></span>
-        <span>Neil</span>
-      </h1>
-
-      <p class="hero-date reveal">
-        Invite you to celebrate · 12 December 2026 · Kochi
-      </p>
+      <h1 class="reveal"><span>Srushti <em>&amp;</em></span><span>Neil</span></h1>
+      <p class="hero-date reveal">Invite you to celebrate · 12 December 2026 · Kochi</p>
     </div>
-
     <div class="seal" aria-hidden="true">S &amp; N</div>
   </header>
 
@@ -642,82 +363,35 @@
     <section class="intro">
       <div class="intro-inner reveal">
         <p class="section-kicker">The invitation</p>
-
-        <h2>
-          One beautiful day,<br>
-          <em>shared with you.</em>
-        </h2>
-
-        <p class="lead">
-          From London to Kerala, two families and two cultures come
-          together by the water. It would mean the world to have you
-          there.
-        </p>
+        <h2>One beautiful day,<br><em>shared with you.</em></h2>
+        <p class="lead">From London to Kerala, two families and two cultures come together by the water. It would mean the world to have you there.</p>
       </div>
     </section>
 
     <section class="invitation-wrap" id="celebration">
       <article class="invitation reveal">
-        <div class="invitation-art" aria-hidden="true">
-          <span class="art-label">Kochi · Kerala · India</span>
-        </div>
-
+        <div class="invitation-art" aria-hidden="true"><span class="art-label">Kochi · Kerala · India</span></div>
         <div class="invitation-copy">
           <p class="section-kicker">Please join us</p>
-
           <h2>For our wedding celebration</h2>
-
           <div class="fine-line"></div>
-
-          <p class="date">
-            Saturday · 12 December · 2026
-          </p>
-
-          <!-- Replace the venue details below. -->
-          <p>
-            at [Village Canopy]<br>
-            [Kallanchery Rd, North Kumbalangi, Kumbalangi], Kochi, Kerala
-          </p>
-
-          <p>
-            Ceremony at 4 o’clock<br>
-            Dinner and dancing to follow
-          </p>
+          <p class="date">Saturday · 12 December · 2026</p>
+          <p>at Village Canopy<br>Kallanchery Rd, North Kumbalangi, Kumbalangi</p>
+          <p>Ceremony at 4 o’clock<br>Dinner and dancing to follow</p>
         </div>
       </article>
     </section>
 
-    <section class="schedule">
+    <section class="schedule" id="schedule">
       <div class="schedule-head reveal">
         <p class="section-kicker">Order of the day</p>
         <h2 class="section-heading">Meet us by the water</h2>
       </div>
-
-      <!-- Replace these sample times when your schedule is confirmed. -->
       <div class="timeline">
-        <div class="event reveal">
-          <time>3:30 pm</time>
-          <h3>Welcome</h3>
-          <p>Drinks &amp; hellos</p>
-        </div>
-
-        <div class="event reveal">
-          <time>4:00 pm</time>
-          <h3>Ceremony</h3>
-          <p>Waterfront lawn</p>
-        </div>
-
-        <div class="event reveal">
-          <time>6:00 pm</time>
-          <h3>Dinner</h3>
-          <p>Kerala flavours &amp; speeches</p>
-        </div>
-
-        <div class="event reveal">
-          <time>8:30 pm</time>
-          <h3>Celebration</h3>
-          <p>Dancing under the stars</p>
-        </div>
+        <div class="event reveal"><time>3:30 pm</time><h3>Welcome</h3><p>Drinks & hellos</p></div>
+        <div class="event reveal"><time>4:00 pm</time><h3>Ceremony</h3><p>Waterfront lawn</p></div>
+        <div class="event reveal"><time>6:00 pm</time><h3>Dinner</h3><p>Kerala flavours & speeches</p></div>
+        <div class="event reveal"><time>8:30 pm</time><h3>Celebration</h3><p>Dancing under the stars</p></div>
       </div>
     </section>
 
@@ -725,48 +399,25 @@
       <div class="notes-grid">
         <div class="notes-copy reveal">
           <p class="section-kicker">Guest notes</p>
-
-          <h2 class="section-heading">
-            A few details before you pack
-          </h2>
-
-          <p>
-            We will add the final travel, accommodation and dress details
-            here. For now, these panels show how practical information can
-            live within the invitation.
-          </p>
+          <h2 class="section-heading">A few details before you pack</h2>
+          <p>We will add the final travel, accommodation and dress details here. For now, these panels show how practical information can live within the invitation.</p>
         </div>
-
         <div class="note-list reveal">
           <details open>
             <summary>Dress</summary>
-            <p>
-              Indian festive.
-              PLEASE WEAR THAT SOMETHING THAT MAKES YOU FEEL WONDERFUL AND COMFORTABLE!
-            </p>
+            <p>Indian festive or cocktail attire. Colour is warmly encouraged; please choose whatever makes you feel wonderful.</p>
           </details>
-
           <details>
             <summary>Getting there</summary>
-            <p>
-              Nearest airport: Cochin International Airport. Add transfer
-              and taxi details here once confirmed.
-            </p>
+            <p>Nearest airport: Cochin International Airport. Add transfer and taxi details here once confirmed.</p>
           </details>
-
           <details>
             <summary>Where to stay</summary>
-            <p>
-              Add recommended hotels, room blocks and booking deadlines here.
-            </p>
+            <p>Add recommended hotels, room blocks and booking deadlines here.</p>
           </details>
-
           <details>
             <summary>Questions</summary>
-            <p>
-              Email: 1511.sreil@gmail.com
-              Ph: +91 90088 73697, +91 8197649416, +44 74075 30117 +44 75862 70998
-            </p>
+            <p>Add a wedding email address or contact person here for anything not covered above.</p>
           </details>
         </div>
       </div>
@@ -775,95 +426,43 @@
     <section class="rsvp" id="rsvp">
       <div class="reveal">
         <p class="section-kicker">We hope you can join us</p>
-
-        <h2 class="section-heading">
-          <em>Please let us know your plans</em>
-        </h2>
-
-        <p>
-          Kindly confirm whether you’ll be with us by 15 July 2026.
-        </p>
-
-        <!--
-          IMPORTANT:
-          Replace the # below with your Google Form or confirmation link.
-
-          Example:
-          href="https://forms.gle/your-form-link"
-        -->
-        <a
-          class="button"
-          href="#"
-          id="rsvpLink"
-          target="_blank"
-          rel="noopener"
-        >
-          Confirm your attendance
-        </a>
+        <h2 class="section-heading"><em>Please let us know your plans</em></h2>
+        <p>Kindly confirm whether you’ll be with us by 15 July 2026.</p>
+        <a class="button" href="https://forms.gle/ELDzxq7gu96xSpcMA" id="rsvpLink" target="_blank" rel="noopener">Confirm your attendance</a>
       </div>
     </section>
   </main>
 
   <footer>
     <strong>S &amp; N</strong>
-
-    <span>
-      12 · 12 · 2026 &nbsp;·&nbsp; Kochi, Kerala
-      &nbsp;·&nbsp; #sreil26
-    </span>
+    <span>12 · 12 · 2026 &nbsp;·&nbsp; Kochi, Kerala &nbsp;·&nbsp; #sreil26</span>
   </footer>
 
   <script>
-    const nav = document.querySelector("#nav");
-    const progress = document.querySelector("#progress");
-
-    function updateScroll() {
-      const maximumScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-      const percentage =
-        maximumScroll > 0
-          ? (window.scrollY / maximumScroll) * 100
-          : 0;
-
-      progress.style.width = `${percentage}%`;
-      nav.classList.toggle("scrolled", window.scrollY > 50);
-    }
-
-    window.addEventListener("scroll", updateScroll, {
-      passive: true
-    });
-
+    const nav = document.querySelector('#nav');
+    const progress = document.querySelector('#progress');
+    const updateScroll = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      progress.style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`;
+      nav.classList.toggle('scrolled', scrollY > 50);
+    };
+    addEventListener('scroll', updateScroll, { passive: true });
     updateScroll();
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.12
-      }
-    );
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach((item) => observer.observe(item));
 
-    document.querySelectorAll(".reveal").forEach((item) => {
-      observer.observe(item);
-    });
-
-    const confirmationLink =
-      document.querySelector("#rsvpLink");
-
-    confirmationLink.addEventListener("click", (event) => {
-      if (confirmationLink.getAttribute("href") === "#") {
+    document.querySelector('#rsvpLink').addEventListener('click', (event) => {
+      if (event.currentTarget.getAttribute('href') === '#') {
         event.preventDefault();
-
-        alert(
-          "Add your attendance confirmation form link before publishing."
-        );
+        alert('Add your RSVP form link to the RSVP button before publishing.');
       }
     });
   </script>
