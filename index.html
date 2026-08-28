@@ -146,20 +146,34 @@
       text-transform: uppercase;
     }
     .seal {
-      position: fixed;
-      z-index: 3;
-      right: clamp(18px, 7vw, 90px);
-      bottom: clamp(18px, 5vw, 50px);
-      width: 92px;
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--gold);
-      color: var(--ink);
-      box-shadow: 0 14px 36px rgba(0,0,0,.2);
-      font: italic 500 1.35rem "Cormorant Garamond", serif;
-      transform: rotate(-8deg);
+  position: fixed;
+  z-index: 3;
+  right: clamp(18px, 7vw, 90px);
+  bottom: clamp(18px, 5vw, 50px);
+  width: 92px;
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+
+  border: 3px solid var(--gold);
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      rgba(32, 21, 13, 0.28),
+      rgba(32, 21, 13, 0.28)
+    ),
+    url("seal-background.jpg") center / cover no-repeat;
+
+  color: white;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25);
+
+  font: italic 700 1.35rem "Cormorant Garamond", serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
+
+  transform: rotate(-8deg);
+}
     }
 
     main section { padding: clamp(80px, 12vw, 150px) 24px; }
