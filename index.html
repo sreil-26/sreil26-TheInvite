@@ -145,37 +145,6 @@
       letter-spacing: .3em;
       text-transform: uppercase;
     }
-    .seal {
-  position: fixed;
-  z-index: 3;
-  right: clamp(18px, 7vw, 90px);
-  bottom: clamp(18px, 5vw, 50px);
-  width: 92px;
-  aspect-ratio: 1;
-
-  display: grid;
-  place-items: center;
-
-  border: 3px solid var(--gold);
-  border-radius: 50%;
-
-  background:
-    linear-gradient(
-      rgba(32, 21, 13, 0.28),
-      rgba(32, 21, 13, 0.28)
-    ),
-    url("seal-background.jpg") center / cover no-repeat;
-
-  color: white;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25);
-
-  font: italic 700 1.35rem "Cormorant Garamond", serif;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
-
-  transform: rotate(-8deg);
-}
-    }
-
     main section { padding: clamp(80px, 12vw, 150px) 24px; }
     .intro { text-align: center; }
     .intro-inner { max-width: 780px; margin: auto; }
@@ -205,25 +174,20 @@
       position: relative;
       overflow: hidden;
       min-height: 360px;
-      background: var(--sea);
+      background:
+        linear-gradient(180deg, rgba(32,21,13,.08), rgba(32,21,13,.38)),
+        url("seal-background.jpg") center / cover no-repeat,
+        var(--sea);
     }
     .invitation-art::before {
       content: "";
       position: absolute;
-      width: 520px;
-      height: 520px;
-      left: -235px;
-      top: 40px;
-      border: 90px solid var(--coral);
-      border-radius: 50%;
+      inset: 18px;
+      border: 1px solid rgba(255,250,240,.42);
+      pointer-events: none;
     }
     .invitation-art::after {
-      content: "12";
-      position: absolute;
-      right: 28px;
-      bottom: -28px;
-      color: rgba(244,234,216,.12);
-      font: 300 15rem/1 "Cormorant Garamond", serif;
+      content: none;
     }
     .art-label {
       position: absolute;
@@ -342,7 +306,6 @@
       .invitation { grid-template-columns: 1fr; }
       .event { grid-template-columns: 1fr; gap: 8px; }
       .notes-grid { grid-template-columns: 1fr; }
-      .seal { width: 76px; right: 22px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -370,7 +333,6 @@
       <h1 class="reveal"><span>Srushti <em>&amp;</em></span><span>Neil</span></h1>
       <p class="hero-date reveal">Invite you to celebrate · 12 December 2026 · Kochi</p>
     </div>
-    <div class="seal" aria-hidden="true">S &amp; N</div>
   </header>
 
   <main>
@@ -419,7 +381,7 @@
         <div class="note-list reveal">
           <details open>
             <summary>Dress</summary>
-            <p>Indian festive. PLEASE WEAR WHATEVER MAKES YOU FEEL WONDERFUL AND COMFORTABLE.</p>
+            <p>Indian festive or cocktail attire. Colour is warmly encouraged; please choose whatever makes you feel wonderful.</p>
           </details>
           <details>
             <summary>Getting there</summary>
@@ -441,7 +403,7 @@
       <div class="reveal">
         <p class="section-kicker">We hope you can join us</p>
         <h2 class="section-heading"><em>Please let us know your plans</em></h2>
-        <p>Kindly confirm whether you’ll be with us by 15th October 2026.</p>
+        <p>Kindly confirm whether you’ll be with us by 15 July 2026.</p>
         <a class="button" href="https://forms.gle/ELDzxq7gu96xSpcMA" id="rsvpLink" target="_blank" rel="noopener">Confirm your attendance</a>
       </div>
     </section>
