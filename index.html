@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Warm hashtag-watermark edition — 29 August 2026 -->
+<!-- Warm hashtag-below edition — 29 August 2026 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -193,17 +193,15 @@
       box-shadow: 0 28px 75px rgba(122,51,24,.18), inset 0 0 0 18px rgba(255,250,240,.5);
     }
     .invitation::before {
-      content: "#sreil26";
+      content: "";
       position: absolute;
-      z-index: 0;
-      top: 50%;
-      left: -3%;
-      color: rgba(201,86,43,.065);
-      font: italic 600 clamp(6rem, 16vw, 13rem)/1 "Cormorant Garamond", serif;
-      letter-spacing: -.06em;
-      white-space: nowrap;
-      pointer-events: none;
-      transform: translateY(-50%) rotate(-8deg);
+      z-index: -1;
+      top: -260px;
+      left: -230px;
+      width: 470px;
+      height: 470px;
+      border: 74px solid rgba(201,86,43,.12);
+      border-radius: 50%;
     }
     .invitation::after {
       content: "";
@@ -289,6 +287,12 @@
     .celebration-details strong {
       color: var(--ink);
       font: italic 400 clamp(1.35rem, 2.8vw, 1.75rem) "Cormorant Garamond", serif;
+    }
+    .card-hashtag {
+      margin: 40px auto 0;
+      color: rgba(201,86,43,.36) !important;
+      font: italic 600 clamp(2rem, 4.5vw, 3rem)/1 "Cormorant Garamond", serif;
+      letter-spacing: .04em;
     }
 
     .schedule { background: var(--sea); color: var(--paper-2); }
@@ -487,6 +491,7 @@
             <div class="detail-rule" aria-hidden="true"></div>
             <div><span>To follow</span><strong>Dinner &amp; dancing</strong></div>
           </div>
+          <p class="card-hashtag">#sreil26</p>
         </div>
       </article>
     </section>
