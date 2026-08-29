@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Warm vertical-date edition — 29 August 2026 -->
+<!-- Warm hashtag-watermark edition — 29 August 2026 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -193,15 +193,17 @@
       box-shadow: 0 28px 75px rgba(122,51,24,.18), inset 0 0 0 18px rgba(255,250,240,.5);
     }
     .invitation::before {
-      content: "";
+      content: "#sreil26";
       position: absolute;
-      z-index: -1;
-      top: -260px;
-      left: -230px;
-      width: 470px;
-      height: 470px;
-      border: 74px solid rgba(201,86,43,.12);
-      border-radius: 50%;
+      z-index: 0;
+      top: 50%;
+      left: -3%;
+      color: rgba(201,86,43,.065);
+      font: italic 600 clamp(6rem, 16vw, 13rem)/1 "Cormorant Garamond", serif;
+      letter-spacing: -.06em;
+      white-space: nowrap;
+      pointer-events: none;
+      transform: translateY(-50%) rotate(-8deg);
     }
     .invitation::after {
       content: "";
@@ -213,26 +215,6 @@
       height: 340px;
       border: 48px solid rgba(49,95,101,.1);
       border-radius: 50%;
-    }
-    .date-stamp {
-      position: absolute;
-      z-index: 2;
-      top: 50%;
-      left: clamp(30px, 4.5vw, 62px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: var(--orange);
-      transform: translateY(-50%);
-    }
-    .date-stamp span {
-      font: 400 clamp(3.2rem, 5.2vw, 4.8rem)/.82 "Cormorant Garamond", serif;
-      letter-spacing: -.04em;
-    }
-    .date-stamp i {
-      margin: 3px 0;
-      color: var(--gold);
-      font: normal 400 1.2rem/1 "Cormorant Garamond", serif;
     }
     .invitation-copy {
       position: relative;
@@ -307,18 +289,6 @@
     .celebration-details strong {
       color: var(--ink);
       font: italic 400 clamp(1.35rem, 2.8vw, 1.75rem) "Cormorant Garamond", serif;
-    }
-
-    @media (max-width: 900px) {
-      .date-stamp {
-        position: static;
-        margin: 54px auto 0;
-        transform: none;
-      }
-      .date-stamp span { font-size: 3rem; }
-      .invitation,
-      .invitation-copy { min-height: auto; }
-      .invitation-copy { padding-top: 48px; }
     }
 
     .schedule { background: var(--sea); color: var(--paper-2); }
@@ -502,9 +472,6 @@
 
     <section class="invitation-wrap" id="celebration">
       <article class="invitation reveal">
-        <div class="date-stamp" aria-hidden="true">
-          <span>12</span><i>·</i><span>12</span><i>·</i><span>26</span>
-        </div>
         <div class="invitation-copy">
           <p class="section-kicker">Please join us</p>
           <h2>For our wedding celebration</h2>
