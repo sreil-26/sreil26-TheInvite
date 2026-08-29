@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Warm hashtag-below edition — 29 August 2026 -->
+<!-- Warm hashtag-below edition with obsolete-link cleanup — 29 August 2026 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -552,6 +552,11 @@
   </footer>
 
   <script>
+    // Remove the obsolete bookmark used by the earlier RSVP version.
+    if (window.location.hash.toLowerCase() === '#rsvp') {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+
     const nav = document.querySelector('#nav');
     const progress = document.querySelector('#progress');
     const menuToggle = document.querySelector('#menuToggle');
