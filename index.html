@@ -493,6 +493,11 @@
       transform: translate(-50%, -50%);
     }
     .notes-grid { max-width: 1080px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(50px, 8vw, 100px); }
+    .notes-copy > .section-kicker {
+      font: italic 500 clamp(1.1rem, 2vw, 1.35rem)/1.2 "Cormorant Garamond", serif;
+      letter-spacing: .12em;
+      text-transform: none;
+    }
     .notes-copy .section-heading { max-width: 460px; }
     .notes-copy > p { max-width: 480px; color: rgba(32,21,13,.65); line-height: 1.8; }
     .note-list { border-top: 1px solid var(--line); }
@@ -604,7 +609,9 @@
       .invitation-copy {
         min-height: auto;
       }
-      .sun { width: min(82vw, 430px); }
+      .sun {
+        width: min(82vw, 430px);
+      }
       .scroll-hint { bottom: 14px; }
       .hero-copy .kicker {
         max-width: 290px;
@@ -782,7 +789,7 @@
           </div>
           <details open>
             <summary>Dress</summary>
-            <p>Indian festive or cocktail attire. Colour is warmly encouraged; please choose whatever makes you feel wonderful.</p>
+            <p>Wear something you feel wonderful in! Go festive, go colourful, go understated—it’s your call. We just want you comfortable and ready to celebrate. Bring your best self!</p>
           </details>
           <details>
             <summary>Where to stay</summary>
