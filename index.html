@@ -316,6 +316,76 @@
     .event p { margin: 0; color: rgba(244,234,216,.62); font-size: .9rem; }
 
     .notes { background: var(--paper-2); }
+    .location-note {
+      margin-bottom: 12px;
+      padding: clamp(24px, 4vw, 34px);
+      background: #efd8bd;
+      border: 1px solid rgba(201,86,43,.28);
+      box-shadow: 0 16px 34px rgba(122,51,24,.1);
+    }
+    .location-note .location-eyebrow {
+      margin: 0 0 8px;
+      color: var(--orange);
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+    .location-note h3 {
+      margin: 0 0 8px;
+      font: 500 clamp(2rem, 4vw, 2.8rem)/1 "Cormorant Garamond", serif;
+    }
+    .location-note address {
+      margin: 0 0 28px;
+      color: rgba(32,21,13,.68);
+      font: normal 400 clamp(1.05rem, 2vw, 1.25rem)/1.6 "Cormorant Garamond", serif;
+    }
+    .map-link {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 14px 22px;
+      background: var(--orange);
+      color: var(--paper-2);
+      border: 1px solid var(--orange);
+      text-decoration: none;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+      transition: background .25s ease, color .25s ease, transform .25s ease;
+    }
+    .map-link:hover {
+      background: transparent;
+      color: var(--orange);
+      transform: translateY(-2px);
+    }
+    .map-link .map-arrow { margin-left: 12px; font-size: 1rem; line-height: 1; }
+    .map-label-short { display: none; }
+    .map-action {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .maps-icon-frame {
+      position: relative;
+      overflow: hidden;
+      flex: 0 0 54px;
+      width: 54px;
+      height: 54px;
+    }
+    .maps-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: auto;
+      height: 54px;
+      max-width: none;
+      transform: translate(-50%, -50%);
+    }
     .notes-grid { max-width: 1080px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(50px, 8vw, 100px); }
     .notes-copy .section-heading { max-width: 460px; }
     .notes-copy > p { max-width: 480px; color: rgba(32,21,13,.65); line-height: 1.8; }
@@ -437,6 +507,12 @@
         margin: auto;
       }
       .event { grid-template-columns: 1fr; gap: 8px; }
+      .map-action { gap: 12px; }
+      .maps-icon-frame { flex-basis: 48px; width: 48px; height: 48px; }
+      .maps-icon { height: 48px; }
+      .map-link { flex: 1; min-width: 0; padding-inline: 16px; }
+      .map-label-full { display: none; }
+      .map-label-short { display: inline; }
       .notes-grid { grid-template-columns: 1fr; }
       .paw-mark {
         width: 28px;
@@ -543,16 +619,27 @@
         <div class="notes-copy reveal">
           <p class="section-kicker">Guest notes</p>
           <h2 class="section-heading">A few details before you pack</h2>
-          <p>We will add the final travel, accommodation and dress details here. For now, these panels show how practical information can live within the invitation.</p>
+          <p>We’ll share final travel and accommodation details here as plans come together.</p>
         </div>
         <div class="note-list reveal">
+          <div class="location-note">
+            <p class="location-eyebrow">Getting there</p>
+            <h3>Village Canopy</h3>
+            <address>Kallanchery Rd, North Kumbalangi<br>Kumbalangi, Kerala</address>
+            <div class="map-action">
+              <span class="maps-icon-frame" aria-hidden="true">
+                <img class="maps-icon" src="google-maps-icon.png" alt="">
+              </span>
+              <a class="map-link" href="https://maps.app.goo.gl/37GeNVPhYFZwxAi67" target="_blank" rel="noopener noreferrer">
+                <span class="map-label-full">Open in Google Maps</span>
+                <span class="map-label-short">Open Maps</span>
+                <span class="map-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
           <details open>
             <summary>Dress</summary>
             <p>Indian festive or cocktail attire. Colour is warmly encouraged; please choose whatever makes you feel wonderful.</p>
-          </details>
-          <details>
-            <summary>Getting there</summary>
-            <p>Nearest airport: Cochin International Airport. Add transfer and taxi details here once confirmed.</p>
           </details>
           <details>
             <summary>Where to stay</summary>
