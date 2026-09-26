@@ -140,7 +140,7 @@
       min-height: 100svh;
       display: grid;
       place-items: center;
-      padding: 110px 24px 80px;
+      padding: 95px 24px;
       overflow: hidden;
       color: var(--paper-2);
       background:
@@ -170,10 +170,15 @@
       position: relative;
       z-index: 2;
       width: min(100%, 980px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      height: min(68svh, 700px);
+      display: grid;
+      grid-template-rows: 1fr auto 1fr;
+      justify-items: center;
       text-align: center;
+    }
+    .hero-copy > .kicker {
+      align-self: end;
+      margin-bottom: 26px;
     }
     .kicker, .section-kicker {
       margin: 0 0 22px;
@@ -187,7 +192,7 @@
     }
     h1, h2, h3, p { margin-top: 0; }
     h1 {
-      margin-bottom: 20px;
+      margin: 0;
       font: 300 clamp(4rem, 12vw, 9rem)/.84 "Cormorant Garamond", serif;
       letter-spacing: -.045em;
     }
@@ -199,6 +204,10 @@
       color: #efad88;
       font-size: .58em;
       font-style: italic;
+    }
+    .hero-lower {
+      align-self: start;
+      text-align: center;
     }
     .hero-tagline {
       margin: 26px 0 0;
@@ -691,11 +700,13 @@
         <span class="hero-amp">&amp;</span>
         <span>Neil</span>
       </h1>
-      <p class="hero-tagline reveal">are tying the knot!</p>
-      <p class="hero-date reveal" style="font-size: clamp(1.15rem, 2.5vw, 1.8rem);">
-        <span>12th December 2026</span>
-        <span>Kumbalangi, Kochi</span>
-      </p>
+      <div class="hero-lower">
+        <p class="hero-tagline reveal">are tying the knot!</p>
+        <p class="hero-date reveal" style="font-size: clamp(1.15rem, 2.5vw, 1.8rem);">
+          <span>12th December 2026</span>
+          <span>Kumbalangi, Kochi</span>
+        </p>
+      </div>
     </div>
     <a class="scroll-hint" href="#intro">Scroll</a>
   </header>
