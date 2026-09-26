@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Warm hashtag-below edition with obsolete-link cleanup — 29 August 2026 -->
+<!-- 4K river-drape invitation edition — 26 September 2026 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -173,10 +173,7 @@
 
     .invitation-wrap {
       padding-top: 0;
-      background:
-        radial-gradient(circle at 18% 48%, rgba(232,134,106,.2), transparent 30%),
-        radial-gradient(circle at 82% 60%, rgba(232,162,74,.22), transparent 34%),
-        linear-gradient(180deg, var(--paper) 0%, #f2dfc5 52%, var(--paper) 100%);
+      background: linear-gradient(180deg, var(--paper) 0%, #f2dfc5 52%, var(--paper) 100%);
     }
     .invitation {
       position: relative;
@@ -185,34 +182,20 @@
       max-width: 1080px;
       margin: auto;
       min-height: 700px;
-      background:
-        radial-gradient(circle at 8% 12%, rgba(232,134,106,.24), transparent 28%),
-        radial-gradient(circle at 94% 90%, rgba(217,154,69,.24), transparent 31%),
-        linear-gradient(145deg, #fff6e6 0%, #f8e4c8 100%);
+      background: linear-gradient(145deg, #fff6e6 0%, #f8e4c8 100%);
       border: 1px solid rgba(201,86,43,.38);
       box-shadow: 0 28px 75px rgba(122,51,24,.18), inset 0 0 0 18px rgba(255,250,240,.5);
     }
-    .invitation::before {
-      content: "";
+    .invitation-drapes {
       position: absolute;
-      z-index: -1;
-      top: -260px;
-      left: -230px;
-      width: 470px;
-      height: 470px;
-      border: 74px solid rgba(201,86,43,.12);
-      border-radius: 50%;
-    }
-    .invitation::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      right: -150px;
-      bottom: -160px;
-      width: 340px;
-      height: 340px;
-      border: 48px solid rgba(49,95,101,.1);
-      border-radius: 50%;
+      z-index: 0;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .3;
+      pointer-events: none;
+      filter: saturate(.78) brightness(1.08);
     }
     .invitation-copy {
       position: relative;
@@ -476,6 +459,7 @@
 
     <section class="invitation-wrap" id="celebration">
       <article class="invitation reveal">
+        <img class="invitation-drapes" src="drapes-river-4k.png" alt="" aria-hidden="true">
         <div class="invitation-copy">
           <p class="section-kicker">Please join us</p>
           <h2>For our wedding celebration</h2>
