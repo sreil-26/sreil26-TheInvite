@@ -188,7 +188,7 @@
     h1, h2, h3, p { margin-top: 0; }
     h1 {
       margin-bottom: 20px;
-      font: 300 clamp(4.5rem, 15vw, 10.5rem)/.82 "Cormorant Garamond", serif;
+      font: 300 clamp(4rem, 12vw, 9rem)/.84 "Cormorant Garamond", serif;
       letter-spacing: -.045em;
     }
     h1 span { display: block; }
@@ -216,8 +216,12 @@
     .hero-date span { display: block; }
     .hero-date span + span { margin-top: 4px; }
     .scroll-hint {
+      position: absolute;
+      z-index: 3;
+      bottom: 18px;
+      left: 50%;
       width: max-content;
-      margin: 44px auto 0;
+      margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -227,6 +231,7 @@
       letter-spacing: .32em;
       text-decoration: none;
       text-transform: uppercase;
+      transform: translateX(-50%);
     }
     .scroll-hint::after {
       content: "";
@@ -591,6 +596,7 @@
         min-height: auto;
       }
       .sun { width: min(82vw, 430px); }
+      .scroll-hint { bottom: 14px; }
       .hero-copy .kicker {
         max-width: 290px;
         font-size: .86rem !important;
@@ -690,8 +696,8 @@
         <span>12th December 2026</span>
         <span>Kumbalangi, Kochi</span>
       </p>
-      <a class="scroll-hint reveal" href="#intro">Scroll</a>
     </div>
+    <a class="scroll-hint" href="#intro">Scroll</a>
   </header>
 
   <main>
