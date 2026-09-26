@@ -61,10 +61,12 @@
       width: 34px;
       height: 34px;
       fill: currentColor;
-      opacity: .62;
+      opacity: 0;
+      visibility: hidden;
       transform-origin: center;
       will-change: opacity, transform;
     }
+    .paw-progress.is-ready .paw-mark { visibility: visible; }
     .nav {
       position: fixed;
       z-index: 90;
@@ -587,49 +589,27 @@
     const nav = document.querySelector('#nav');
     const progress = document.querySelector('#progress');
     const pawProgress = document.querySelector('#pawProgress');
-    const pawMarks = Array.from(pawProgress.querySelectorAll('.paw-mark'));
-    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-    const menuToggle = document.querySelector('#menuToggle');
-    const menuOverlay = document.querySelector('#menuOverlay');
-    const navLinks = document.querySelector('#navLinks');
-
-    const setMenu = (open) => {
-      nav.classList.toggle('open', open);
-      document.body.classList.toggle('menu-open', open);
-      menuToggle.setAttribute('aria-expanded', String(open));
-      menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    };
-
-    menuToggle.addEventListener('click', () => {
-      setMenu(!nav.classList.contains('open'));
-    });
-    menuOverlay.addEventListener('click', () => setMenu(false));
-    navLinks.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setMenu(false));
-    });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && nav.classList.contains('open')) {
-        setMenu(false);
-        menuToggle.focus();
-      }
-    });
-    matchMedia('(min-width: 761px)').addEventListener('change', (event) => {
-      if (event.matches) setMenu(false);
-    });
+    const pawMarks = pawProgress ? Array.from(pawProgress.querySelectorAll('.paw-mark')) : [];
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     const updateScroll = () => {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      const pageProgress = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
-      progress.style.width = `${pageProgress * 100}%`;
-      nav.classList.toggle('scrolled', scrollY > 50);
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+      const max = document.documentElement.scrollHeight - viewportHeight;
+      const pageProgress = max > 0 ? Math.min(1, Math.max(0, scrollTop / max)) : 0;
 
-      const compact = innerWidth <= 760;
-      const pawSize = pawMarks[0].offsetWidth;
+      if (progress) progress.style.width = `${pageProgress * 100}%`;
+      if (nav) nav.classList.toggle('scrolled', scrollTop > 50);
+      if (!pawProgress || pawMarks.length !== 4) return;
+
+      const compact = viewportWidth <= 760;
+      const pawSize = pawMarks[0].offsetWidth || (compact ? 28 : 34);
       const edge = compact ? 12 : 24;
       const startX = edge;
       const startY = compact ? 74 : 84;
-      const endX = innerWidth - pawSize - edge;
-      const endY = innerHeight - pawSize - edge;
+      const endX = viewportWidth - pawSize - edge;
+      const endY = viewportHeight - pawSize - edge;
       const deltaX = endX - startX;
       const deltaY = endY - startY;
       const pathAngle = Math.atan2(deltaY, deltaX);
@@ -644,7 +624,7 @@
 
       const footprintPosition = (stepIndex) => {
         const pathProgress = stepIndex / (totalFootprints - 1);
-        const curve = Math.sin(pathProgress * Math.PI) * Math.min(46, innerWidth * .035);
+        const curve = Math.sin(pathProgress * Math.PI) * Math.min(46, viewportWidth * .035);
         const side = stepIndex % 2 === 0 ? -1 : 1;
         return {
           x: startX + (deltaX * pathProgress) + (perpendicularX * (curve + (side * trackWidth))),
@@ -677,10 +657,55 @@
         paw.style.opacity = String(opacity);
         paw.style.transform = `translate3d(${point.x}px, ${point.y}px, 0) rotate(${point.rotation}deg) scale(${scale})`;
       });
+
+      pawProgress.classList.add('is-ready');
     };
-    addEventListener('scroll', updateScroll, { passive: true });
-    addEventListener('resize', updateScroll, { passive: true });
+
+    // Start the dog trail before setting up unrelated page controls. Each
+    // planted print stays still; only the oldest fades out and lands ahead.
     updateScroll();
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    window.addEventListener('resize', updateScroll, { passive: true });
+
+    const menuToggle = document.querySelector('#menuToggle');
+    const menuOverlay = document.querySelector('#menuOverlay');
+    const navLinks = document.querySelector('#navLinks');
+
+    const setMenu = (open) => {
+      if (!nav || !menuToggle) return;
+      nav.classList.toggle('open', open);
+      document.body.classList.toggle('menu-open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+
+    if (menuToggle && nav) {
+      menuToggle.addEventListener('click', () => {
+        setMenu(!nav.classList.contains('open'));
+      });
+    }
+    if (menuOverlay) menuOverlay.addEventListener('click', () => setMenu(false));
+    if (navLinks) {
+      navLinks.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMenu(false));
+      });
+    }
+    document.addEventListener('keydown', (event) => {
+      if (nav && menuToggle && event.key === 'Escape' && nav.classList.contains('open')) {
+        setMenu(false);
+        menuToggle.focus();
+      }
+    });
+
+    const desktopQuery = window.matchMedia('(min-width: 761px)');
+    const closeDesktopMenu = (event) => {
+      if (event.matches) setMenu(false);
+    };
+    if (desktopQuery.addEventListener) {
+      desktopQuery.addEventListener('change', closeDesktopMenu);
+    } else if (desktopQuery.addListener) {
+      desktopQuery.addListener(closeDesktopMenu);
+    }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
