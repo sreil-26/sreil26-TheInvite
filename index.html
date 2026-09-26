@@ -345,6 +345,7 @@
 
     .countdown {
       overflow: hidden;
+      padding-block: clamp(64px, 8vw, 95px);
       text-align: center;
       background:
         radial-gradient(circle at 15% 20%, rgba(220,123,97,.16), transparent 28%),
@@ -389,7 +390,13 @@
 
     .schedule { background: var(--sea); color: var(--paper-2); }
     .schedule-head { max-width: 1080px; margin: 0 auto 55px; text-align: center; }
-    .schedule .section-kicker { color: #efbd77; }
+    .schedule .section-kicker {
+      color: #efbd77;
+      font-size: clamp(.82rem, 1.6vw, .98rem);
+    }
+    .schedule .section-heading {
+      font-size: clamp(3.2rem, 7.8vw, 6rem);
+    }
     .timeline { max-width: 940px; margin: auto; border-top: 1px solid rgba(244,234,216,.28); }
     .event {
       display: grid;
@@ -399,9 +406,30 @@
       padding: 32px 0;
       border-bottom: 1px solid rgba(244,234,216,.22);
     }
-    .event time { color: #f0bd78; font-size: .78rem; letter-spacing: .22em; text-transform: uppercase; }
+    .event time {
+      color: #f0bd78;
+      font-size: clamp(.92rem, 1.6vw, 1.08rem);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
     .event h3 { margin: 0; font: 300 clamp(1.8rem, 4vw, 2.7rem) "Cormorant Garamond", serif; }
     .event p { margin: 0; color: rgba(244,234,216,.62); font-size: .9rem; }
+    .full-schedule {
+      max-width: 940px;
+      margin: 34px auto 0;
+      border: 1px solid rgba(244,234,216,.28);
+      background: rgba(244,234,216,.04);
+    }
+    .full-schedule > summary {
+      padding: 24px 28px;
+      color: var(--paper-2);
+      font: 400 clamp(1.35rem, 3vw, 1.7rem) "Cormorant Garamond", serif;
+    }
+    .full-schedule > summary::after { color: #f0bd78; }
+    .full-schedule[open] > summary { border-bottom: 1px solid rgba(244,234,216,.22); }
+    .detailed-timeline { padding: 0 28px 12px; }
+    .detailed-timeline .event { padding: 24px 0; }
+    .full-schedule .event p { padding: 0; }
 
     .notes { background: var(--paper-2); }
     .location-note {
@@ -603,6 +631,8 @@
         margin: auto;
       }
       .event { grid-template-columns: 1fr; gap: 8px; }
+      .full-schedule > summary { padding: 22px 20px; }
+      .detailed-timeline { padding: 0 20px 8px; }
       .countdown-row { grid-template-columns: repeat(2, 1fr); }
       .map-action { gap: 12px; }
       .maps-icon-frame { flex-basis: 48px; width: 48px; height: 48px; }
@@ -719,15 +749,39 @@
 
     <section class="schedule" id="schedule">
       <div class="schedule-head reveal">
-        <p class="section-kicker">Order of the day</p>
+        <p class="section-kicker">Order of events</p>
         <h2 class="section-heading">Meet us by the water</h2>
       </div>
       <div class="timeline">
-        <div class="event reveal"><time>3:30 pm</time><h3>Welcome</h3><p>Drinks & hellos</p></div>
-        <div class="event reveal"><time>4pm</time><h3>Ceremony</h3><p>Waterfront lawn</p></div>
-        <div class="event reveal"><time>6:00 pm</time><h3>Dinner</h3><p>Kerala flavours & speeches</p></div>
-        <div class="event reveal"><time>8:30 pm</time><h3>Celebration</h3><p>Dancing under the stars</p></div>
+        <div class="event reveal"><time>4:00 pm</time><h3>Guest arrival</h3><p>Music begins; guests take their seats</p></div>
+        <div class="event reveal"><time>4:30 pm</time><h3>Ceremony</h3><p>The processional begins</p></div>
+        <div class="event reveal"><time>5:30 pm</time><h3>Cocktails &amp; starters</h3></div>
+        <div class="event reveal"><time>6:15 pm</time><h3>Grand entrance</h3></div>
+        <div class="event reveal"><time>6:55 pm</time><h3>Dinner &amp; toasts</h3></div>
+        <div class="event reveal"><time>8:30 pm</time><h3>Cake cutting</h3></div>
+        <div class="event reveal"><time>8:45 pm</time><h3>Open dance floor</h3></div>
       </div>
+      <details class="full-schedule">
+        <summary>See the full timeline</summary>
+        <div class="detailed-timeline">
+          <div class="event"><time>4:00 pm</time><h3>Prelude &amp; guest arrival</h3><p>Music begins; guests take their seats</p></div>
+          <div class="event"><time>4:30 pm</time><h3>Processional</h3><p>Officiant, wedding party, Neil and Srushti enter</p></div>
+          <div class="event"><time>4:45 pm</time><h3>Welcome remarks</h3></div>
+          <div class="event"><time>4:55 pm</time><h3>Readings</h3></div>
+          <div class="event"><time>5:05 pm</time><h3>Vows &amp; intent</h3></div>
+          <div class="event"><time>5:15 pm</time><h3>Ring exchange</h3></div>
+          <div class="event"><time>5:20 pm</time><h3>Pronouncement &amp; kiss</h3></div>
+          <div class="event"><time>5:25 pm</time><h3>Recessional</h3></div>
+          <div class="event"><time>5:30 pm</time><h3>Cocktails &amp; circulating starters</h3><p>Neil and Srushti change outfits</p></div>
+          <div class="event"><time>6:15 pm</time><h3>Grand entrance</h3></div>
+          <div class="event"><time>6:35–6:45 pm</time><h3>Guests settle; transition to first dance</h3></div>
+          <div class="event"><time>6:45 pm</time><h3>First dance</h3></div>
+          <div class="event"><time>6:55 pm</time><h3>Dinner &amp; toasts</h3></div>
+          <div class="event"><time>8:15 pm</time><h3>Parent dances</h3></div>
+          <div class="event"><time>8:30 pm</time><h3>Cake cutting</h3></div>
+          <div class="event"><time>8:45 pm</time><h3>Open dance floor</h3></div>
+        </div>
+      </details>
     </section>
 
     <section class="notes" id="details">
