@@ -178,6 +178,31 @@
       letter-spacing: .3em;
       text-transform: uppercase;
     }
+    .scroll-hint {
+      width: max-content;
+      margin: 44px auto 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,250,240,.48);
+      font-size: .7rem;
+      letter-spacing: .32em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .scroll-hint::after {
+      content: "";
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, #f0bc72, transparent);
+      transform-origin: top;
+      animation: scrollDrip 2s ease-in-out infinite;
+    }
+    @keyframes scrollDrip {
+      0%, 100% { opacity: .3; transform: scaleY(.48) translateY(-6px); }
+      55% { opacity: 1; transform: scaleY(1) translateY(0); }
+    }
     main section { padding: clamp(80px, 12vw, 150px) 24px; }
     .intro { text-align: center; }
     .intro-inner { max-width: 1100px; margin: auto; }
@@ -297,6 +322,66 @@
       color: rgba(201,86,43,.36) !important;
       font: italic 600 clamp(2rem, 4.5vw, 3rem)/1 "Cormorant Garamond", serif;
       letter-spacing: .04em;
+    }
+    .card-hashtag span {
+      display: inline-block;
+      animation: hashtagWave 2s ease-in-out infinite;
+    }
+    .card-hashtag span:nth-child(1) { animation-delay: 0s; }
+    .card-hashtag span:nth-child(2) { animation-delay: .1s; }
+    .card-hashtag span:nth-child(3) { animation-delay: .2s; }
+    .card-hashtag span:nth-child(4) { animation-delay: .3s; }
+    .card-hashtag span:nth-child(5) { animation-delay: .4s; }
+    .card-hashtag span:nth-child(6) { animation-delay: .5s; }
+    .card-hashtag span:nth-child(7) { animation-delay: .6s; }
+    .card-hashtag span:nth-child(8) { animation-delay: .7s; }
+    @keyframes hashtagWave {
+      0%, 100% { color: rgba(201,86,43,.36); transform: translateY(0); }
+      50% { color: rgba(217,154,69,.72); transform: translateY(-10px); }
+    }
+
+    .countdown {
+      overflow: hidden;
+      text-align: center;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(220,123,97,.16), transparent 28%),
+        radial-gradient(circle at 88% 85%, rgba(217,154,69,.2), transparent 30%),
+        #f1dfc8;
+    }
+    .countdown-inner { max-width: 980px; margin: auto; }
+    .countdown .section-heading { margin-bottom: 18px; }
+    .countdown-date {
+      margin-bottom: 0;
+      color: rgba(32,21,13,.62);
+      font: italic 400 clamp(1.2rem, 2.8vw, 1.65rem) "Cormorant Garamond", serif;
+    }
+    .countdown-row {
+      max-width: 820px;
+      margin: clamp(38px, 6vw, 62px) auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .countdown-box {
+      min-width: 0;
+      padding: clamp(24px, 4vw, 40px) 10px;
+      background: rgba(255,250,240,.55);
+      border: 1px solid rgba(201,86,43,.2);
+    }
+    .countdown-box .num {
+      display: block;
+      color: var(--orange);
+      font: 300 clamp(2.7rem, 7vw, 5rem)/.8 "Cormorant Garamond", serif;
+      font-variant-numeric: tabular-nums;
+    }
+    .countdown-box .unit {
+      display: block;
+      margin-top: 16px;
+      color: rgba(32,21,13,.5);
+      font-size: clamp(.58rem, 1.4vw, .72rem);
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
     }
 
     .schedule { background: var(--sea); color: var(--paper-2); }
@@ -507,6 +592,7 @@
         margin: auto;
       }
       .event { grid-template-columns: 1fr; gap: 8px; }
+      .countdown-row { grid-template-columns: repeat(2, 1fr); }
       .map-action { gap: 12px; }
       .maps-icon-frame { flex-basis: 48px; width: 48px; height: 48px; }
       .maps-icon { height: 48px; }
@@ -522,6 +608,8 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .reveal { opacity: 1; transform: none; transition: none; }
+      .scroll-hint::after,
+      .card-hashtag span { animation: none; }
     }
   </style>
 </head>
@@ -567,11 +655,12 @@
       <p class="hero-date reveal" style="font-size: clamp(1.15rem, 2.5vw, 1.8rem);">
         Invite you to celebrate · 12 December 2026 · Kochi
       </p>
+      <a class="scroll-hint reveal" href="#intro">Scroll</a>
     </div>
   </header>
 
   <main>
-    <section class="intro">
+    <section class="intro" id="intro">
       <div class="intro-inner reveal">
         <h2>Pack your dancing&nbsp;shoes — <br><em>we’re getting married!</em></h2>
         <p class="lead">We can’t wait to bring our favourite people together in Kerala for a beautiful day by the water, as we promise each other forever and celebrate into the night.</p>
@@ -596,9 +685,25 @@
             <div class="detail-rule" aria-hidden="true"></div>
             <div><span>To follow</span><strong>Dinner &amp; dancing</strong></div>
           </div>
-          <p class="card-hashtag">#sreil26</p>
+          <p class="card-hashtag">
+            <span>#</span><span>s</span><span>r</span><span>e</span><span>i</span><span>l</span><span>2</span><span>6</span>
+          </p>
         </div>
       </article>
+    </section>
+
+    <section class="countdown" id="countdown">
+      <div class="countdown-inner reveal">
+        <p class="section-kicker">The countdown</p>
+        <h2 class="section-heading">Until we celebrate</h2>
+        <p class="countdown-date">Saturday, 12 December 2026 · 4 o’clock</p>
+        <div class="countdown-row" aria-label="Countdown to the wedding ceremony">
+          <div class="countdown-box"><span class="num" id="cd-days">—</span><span class="unit">Days</span></div>
+          <div class="countdown-box"><span class="num" id="cd-hours">—</span><span class="unit">Hours</span></div>
+          <div class="countdown-box"><span class="num" id="cd-minutes">—</span><span class="unit">Minutes</span></div>
+          <div class="countdown-box"><span class="num" id="cd-seconds">—</span><span class="unit">Seconds</span></div>
+        </div>
+      </div>
     </section>
 
     <section class="schedule" id="schedule">
@@ -793,6 +898,35 @@
     } else if (desktopQuery.addListener) {
       desktopQuery.addListener(closeDesktopMenu);
     }
+
+    const countdownTarget = Date.parse('2026-12-12T16:00:00+05:30');
+    const countdownValues = {
+      days: document.querySelector('#cd-days'),
+      hours: document.querySelector('#cd-hours'),
+      minutes: document.querySelector('#cd-minutes'),
+      seconds: document.querySelector('#cd-seconds')
+    };
+    let countdownTimer;
+
+    const updateCountdown = () => {
+      if (Object.values(countdownValues).some((item) => !item)) return;
+
+      const remaining = Math.max(0, countdownTarget - Date.now());
+      const days = Math.floor(remaining / 86400000);
+      const hours = Math.floor((remaining % 86400000) / 3600000);
+      const minutes = Math.floor((remaining % 3600000) / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
+
+      countdownValues.days.textContent = String(days);
+      countdownValues.hours.textContent = String(hours).padStart(2, '0');
+      countdownValues.minutes.textContent = String(minutes).padStart(2, '0');
+      countdownValues.seconds.textContent = String(seconds).padStart(2, '0');
+
+      if (remaining === 0 && countdownTimer) clearInterval(countdownTimer);
+    };
+
+    updateCountdown();
+    countdownTimer = window.setInterval(updateCountdown, 1000);
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
