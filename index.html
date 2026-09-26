@@ -414,23 +414,6 @@
     }
     .event h3 { margin: 0; font: 300 clamp(1.8rem, 4vw, 2.7rem) "Cormorant Garamond", serif; }
     .event p { margin: 0; color: rgba(244,234,216,.62); font-size: .9rem; }
-    .full-schedule {
-      max-width: 940px;
-      margin: 34px auto 0;
-      border: 1px solid rgba(244,234,216,.28);
-      background: rgba(244,234,216,.04);
-    }
-    .full-schedule > summary {
-      padding: 24px 28px;
-      color: var(--paper-2);
-      font: 400 clamp(1.35rem, 3vw, 1.7rem) "Cormorant Garamond", serif;
-    }
-    .full-schedule > summary::after { color: #f0bd78; }
-    .full-schedule[open] > summary { border-bottom: 1px solid rgba(244,234,216,.22); }
-    .detailed-timeline { padding: 0 28px 12px; }
-    .detailed-timeline .event { padding: 24px 0; }
-    .full-schedule .event p { padding: 0; }
-
     .notes { background: var(--paper-2); }
     .location-note {
       margin-bottom: 12px;
@@ -631,8 +614,6 @@
         margin: auto;
       }
       .event { grid-template-columns: 1fr; gap: 8px; }
-      .full-schedule > summary { padding: 22px 20px; }
-      .detailed-timeline { padding: 0 20px 8px; }
       .countdown-row { grid-template-columns: repeat(2, 1fr); }
       .map-action { gap: 12px; }
       .maps-icon-frame { flex-basis: 48px; width: 48px; height: 48px; }
@@ -704,7 +685,7 @@
     <section class="intro" id="intro">
       <div class="intro-inner reveal">
         <h2>Pack your dancing&nbsp;shoes — <br><em>we’re getting married!</em></h2>
-        <p class="lead">We can’t wait to bring our favourite people together in Kerala for a beautiful day by the water, as we promise each other forever and celebrate into the night.</p>
+        <p class="lead">We can’t wait to bring our favourite people together in Kerala for a beautiful day by the water, as we promise each other forever.</p>
       </div>
     </section>
 
@@ -761,27 +742,6 @@
         <div class="event reveal"><time>8:30 pm</time><h3>Cake cutting</h3></div>
         <div class="event reveal"><time>8:45 pm</time><h3>Open dance floor</h3></div>
       </div>
-      <details class="full-schedule">
-        <summary>See the full timeline</summary>
-        <div class="detailed-timeline">
-          <div class="event"><time>4:00 pm</time><h3>Prelude &amp; guest arrival</h3><p>Music begins; guests take their seats</p></div>
-          <div class="event"><time>4:30 pm</time><h3>Processional</h3><p>Officiant, wedding party, Neil and Srushti enter</p></div>
-          <div class="event"><time>4:45 pm</time><h3>Welcome remarks</h3></div>
-          <div class="event"><time>4:55 pm</time><h3>Readings</h3></div>
-          <div class="event"><time>5:05 pm</time><h3>Vows &amp; intent</h3></div>
-          <div class="event"><time>5:15 pm</time><h3>Ring exchange</h3></div>
-          <div class="event"><time>5:20 pm</time><h3>Pronouncement &amp; kiss</h3></div>
-          <div class="event"><time>5:25 pm</time><h3>Recessional</h3></div>
-          <div class="event"><time>5:30 pm</time><h3>Cocktails &amp; circulating starters</h3><p>Neil and Srushti change outfits</p></div>
-          <div class="event"><time>6:15 pm</time><h3>Grand entrance</h3></div>
-          <div class="event"><time>6:35–6:45 pm</time><h3>Guests settle; transition to first dance</h3></div>
-          <div class="event"><time>6:45 pm</time><h3>First dance</h3></div>
-          <div class="event"><time>6:55 pm</time><h3>Dinner &amp; toasts</h3></div>
-          <div class="event"><time>8:15 pm</time><h3>Parent dances</h3></div>
-          <div class="event"><time>8:30 pm</time><h3>Cake cutting</h3></div>
-          <div class="event"><time>8:45 pm</time><h3>Open dance floor</h3></div>
-        </div>
-      </details>
     </section>
 
     <section class="notes" id="details">
