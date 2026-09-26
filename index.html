@@ -57,6 +57,7 @@
       pointer-events: none;
       will-change: transform;
       filter: drop-shadow(0 2px 3px rgba(32, 21, 13, .14));
+      transform-origin: center;
     }
     .paw-mark {
       position: absolute;
@@ -70,22 +71,22 @@
     .paw-one {
       top: 0;
       left: 5px;
-      transform: translate3d(var(--step-x, 0), var(--step-y, 0), 0) rotate(-18deg) scale(var(--step-scale, 1));
+      transform: rotate(164deg) scale(var(--step-scale, 1));
     }
     .paw-two {
       top: 22px;
       right: 5px;
-      transform: translate3d(var(--step-x, 0), var(--step-y, 0), 0) rotate(16deg) scale(var(--step-scale, 1));
+      transform: rotate(196deg) scale(var(--step-scale, 1));
     }
     .paw-three {
       top: 62px;
       left: 2px;
-      transform: translate3d(var(--step-x, 0), var(--step-y, 0), 0) rotate(-14deg) scale(var(--step-scale, 1));
+      transform: rotate(166deg) scale(var(--step-scale, 1));
     }
     .paw-four {
       top: 86px;
       right: 2px;
-      transform: translate3d(var(--step-x, 0), var(--step-y, 0), 0) rotate(18deg) scale(var(--step-scale, 1));
+      transform: rotate(198deg) scale(var(--step-scale, 1));
     }
 
     .nav {
@@ -661,18 +662,17 @@
       const curve = Math.sin(pageProgress * Math.PI);
       const x = startX + ((endX - startX) * pageProgress) + (curve * Math.min(48, innerWidth * .04));
       const y = startY + ((endY - startY) * pageProgress) + (Math.sin(pageProgress * Math.PI * 2) * 10);
-      pawProgress.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${(pageProgress * 8) - 4}deg)`;
+      const pathAngle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI);
+      pawProgress.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${pathAngle - 90}deg)`;
 
-      const stepPhase = pageProgress * Math.PI * 24;
+      const footfalls = pageProgress * 36;
       pawMarks.forEach((paw, index) => {
-        const phase = stepPhase - (index * Math.PI / 2);
-        const stride = reducedMotion.matches ? 0 : Math.sin(phase);
-        const lift = reducedMotion.matches ? 0 : Math.max(0, Math.sin(phase));
-        const side = index % 2 === 0 ? -1 : 1;
-        paw.style.opacity = String(reducedMotion.matches ? .62 : .42 + ((1 - lift) * .42));
-        paw.style.setProperty('--step-scale', reducedMotion.matches ? '1' : String(.92 + ((1 - lift) * .12)));
-        paw.style.setProperty('--step-x', `${(stride * 9) + (lift * side * 3)}px`);
-        paw.style.setProperty('--step-y', `${(stride * 7) - (lift * 16)}px`);
+        const phase = ((footfalls - index + 40) % 4) / 4;
+        const fadeIn = Math.min(1, phase / .14);
+        const fadeOut = phase < .56 ? 1 : Math.max(0, (1 - phase) / .44);
+        const printStrength = reducedMotion.matches ? .58 : fadeIn * fadeOut;
+        paw.style.opacity = String(.14 + (printStrength * .72));
+        paw.style.setProperty('--step-scale', reducedMotion.matches ? '1' : String(.88 + (printStrength * .12)));
       });
     };
     addEventListener('scroll', updateScroll, { passive: true });
