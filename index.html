@@ -70,22 +70,22 @@
     .paw-one {
       top: 0;
       left: 5px;
-      transform: rotate(-18deg) scale(var(--step-scale, 1));
+      transform: translate3d(var(--step-x, 0), var(--step-y, 0), 0) rotate(-18deg) scale(var(--step-scale, 1));
     }
     .paw-two {
       top: 22px;
       right: 5px;
-      transform: rotate(16deg) scale(var(--step-scale, 1));
+      transform: translate3d(var(--step-x, 0), var(--step-y, 0), 0) rotate(16deg) scale(var(--step-scale, 1));
     }
     .paw-three {
       top: 62px;
       left: 2px;
-      transform: rotate(-14deg) scale(var(--step-scale, 1));
+      transform: translate3d(var(--step-x, 0), var(--step-y, 0), 0) rotate(-14deg) scale(var(--step-scale, 1));
     }
     .paw-four {
       top: 86px;
       right: 2px;
-      transform: rotate(18deg) scale(var(--step-scale, 1));
+      transform: translate3d(var(--step-x, 0), var(--step-y, 0), 0) rotate(18deg) scale(var(--step-scale, 1));
     }
 
     .nav {
@@ -663,11 +663,16 @@
       const y = startY + ((endY - startY) * pageProgress) + (Math.sin(pageProgress * Math.PI * 2) * 10);
       pawProgress.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${(pageProgress * 8) - 4}deg)`;
 
-      const stepPhase = pageProgress * Math.PI * 16;
+      const stepPhase = pageProgress * Math.PI * 24;
       pawMarks.forEach((paw, index) => {
-        const lift = reducedMotion.matches ? .5 : (Math.sin(stepPhase - (index * Math.PI / 2)) + 1) / 2;
-        paw.style.opacity = String(.36 + (lift * .5));
-        paw.style.setProperty('--step-scale', reducedMotion.matches ? '1' : String(.9 + (lift * .14)));
+        const phase = stepPhase - (index * Math.PI / 2);
+        const stride = reducedMotion.matches ? 0 : Math.sin(phase);
+        const lift = reducedMotion.matches ? 0 : Math.max(0, Math.sin(phase));
+        const side = index % 2 === 0 ? -1 : 1;
+        paw.style.opacity = String(reducedMotion.matches ? .62 : .42 + ((1 - lift) * .42));
+        paw.style.setProperty('--step-scale', reducedMotion.matches ? '1' : String(.92 + ((1 - lift) * .12)));
+        paw.style.setProperty('--step-x', `${(stride * 9) + (lift * side * 3)}px`);
+        paw.style.setProperty('--step-y', `${(stride * 7) - (lift * 16)}px`);
       });
     };
     addEventListener('scroll', updateScroll, { passive: true });
