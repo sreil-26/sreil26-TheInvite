@@ -49,15 +49,12 @@
     .paw-progress {
       position: fixed;
       z-index: 82;
-      top: 0;
-      left: 0;
-      width: 108px;
-      height: 128px;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
       color: rgba(201, 86, 43, .62);
       pointer-events: none;
-      will-change: transform;
       filter: drop-shadow(0 2px 3px rgba(32, 21, 13, .14));
-      transform-origin: center;
     }
     .paw-mark {
       position: absolute;
@@ -68,27 +65,6 @@
       transform-origin: center;
       will-change: opacity, transform;
     }
-    .paw-one {
-      top: 0;
-      left: 5px;
-      transform: rotate(164deg) scale(var(--step-scale, 1));
-    }
-    .paw-two {
-      top: 22px;
-      right: 5px;
-      transform: rotate(196deg) scale(var(--step-scale, 1));
-    }
-    .paw-three {
-      top: 62px;
-      left: 2px;
-      transform: rotate(166deg) scale(var(--step-scale, 1));
-    }
-    .paw-four {
-      top: 86px;
-      right: 2px;
-      transform: rotate(198deg) scale(var(--step-scale, 1));
-    }
-
     .nav {
       position: fixed;
       z-index: 90;
@@ -460,17 +436,10 @@
       }
       .event { grid-template-columns: 1fr; gap: 8px; }
       .notes-grid { grid-template-columns: 1fr; }
-      .paw-progress {
-        width: 88px;
-        height: 108px;
-      }
       .paw-mark {
         width: 28px;
         height: 28px;
       }
-      .paw-two { top: 18px; }
-      .paw-three { top: 52px; }
-      .paw-four { top: 74px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -655,24 +624,58 @@
       nav.classList.toggle('scrolled', scrollY > 50);
 
       const compact = innerWidth <= 760;
-      const startX = compact ? 10 : 22;
-      const startY = compact ? 72 : 82;
-      const endX = Math.max(startX, innerWidth - pawProgress.offsetWidth - (compact ? 10 : 22));
-      const endY = Math.max(startY, innerHeight - pawProgress.offsetHeight - (compact ? 12 : 22));
-      const curve = Math.sin(pageProgress * Math.PI);
-      const x = startX + ((endX - startX) * pageProgress) + (curve * Math.min(48, innerWidth * .04));
-      const y = startY + ((endY - startY) * pageProgress) + (Math.sin(pageProgress * Math.PI * 2) * 10);
-      const pathAngle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI);
-      pawProgress.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${pathAngle - 90}deg)`;
+      const pawSize = pawMarks[0].offsetWidth;
+      const edge = compact ? 12 : 24;
+      const startX = edge;
+      const startY = compact ? 74 : 84;
+      const endX = innerWidth - pawSize - edge;
+      const endY = innerHeight - pawSize - edge;
+      const deltaX = endX - startX;
+      const deltaY = endY - startY;
+      const pathAngle = Math.atan2(deltaY, deltaX);
+      const perpendicularX = -Math.sin(pathAngle);
+      const perpendicularY = Math.cos(pathAngle);
+      const trackWidth = compact ? 8 : 12;
+      const totalFootprints = 32;
+      const travel = pageProgress * (totalFootprints - 4);
+      const cycle = Math.min(totalFootprints - 4, Math.floor(travel));
+      const landingPhase = cycle === totalFootprints - 4 ? 0 : travel - cycle;
+      const oldestSlot = cycle % 4;
 
-      const footfalls = pageProgress * 36;
-      pawMarks.forEach((paw, index) => {
-        const phase = ((footfalls - index + 40) % 4) / 4;
-        const fadeIn = Math.min(1, phase / .14);
-        const fadeOut = phase < .56 ? 1 : Math.max(0, (1 - phase) / .44);
-        const printStrength = reducedMotion.matches ? .58 : fadeIn * fadeOut;
-        paw.style.opacity = String(.14 + (printStrength * .72));
-        paw.style.setProperty('--step-scale', reducedMotion.matches ? '1' : String(.88 + (printStrength * .12)));
+      const footprintPosition = (stepIndex) => {
+        const pathProgress = stepIndex / (totalFootprints - 1);
+        const curve = Math.sin(pathProgress * Math.PI) * Math.min(46, innerWidth * .035);
+        const side = stepIndex % 2 === 0 ? -1 : 1;
+        return {
+          x: startX + (deltaX * pathProgress) + (perpendicularX * (curve + (side * trackWidth))),
+          y: startY + (deltaY * pathProgress) + (perpendicularY * (curve + (side * trackWidth))),
+          rotation: (pathAngle * (180 / Math.PI)) + 90 + (side * 7)
+        };
+      };
+
+      pawMarks.forEach((paw, slot) => {
+        const placeInTrail = ((slot - oldestSlot) + 4) % 4;
+        let stepIndex = cycle + placeInTrail;
+        let printStrength = .5 + (placeInTrail * .12);
+        let opacity;
+
+        if (slot === oldestSlot && !reducedMotion.matches) {
+          if (landingPhase < .48) {
+            stepIndex = cycle;
+            printStrength = 1 - (landingPhase / .48);
+          } else {
+            stepIndex = Math.min(cycle + 4, totalFootprints - 1);
+            printStrength = (landingPhase - .48) / .52;
+          }
+          opacity = printStrength * .84;
+        } else {
+          opacity = .12 + (printStrength * .72);
+        }
+
+        const point = footprintPosition(stepIndex);
+        const scale = .88 + (printStrength * .12);
+        paw.style.opacity = String(opacity);
+        paw.style.transform = `translate3d(${point.x}px, ${point.y}px, 0) rotate(${point.rotation}deg) scale(${scale})`;
       });
     };
     addEventListener('scroll', updateScroll, { passive: true });
