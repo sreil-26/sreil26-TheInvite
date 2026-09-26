@@ -183,14 +183,27 @@
     h1 span { display: block; }
     h1 span + span { margin-top: .08em; }
     h1 em { color: #efad88; font-size: .6em; font-weight: 300; }
+    h1 .hero-amp {
+      margin-block: .02em;
+      color: #efad88;
+      font-size: .58em;
+      font-style: italic;
+    }
+    .hero-tagline {
+      margin: 26px 0 0;
+      color: rgba(255,250,240,.9);
+      font: italic 400 clamp(1.5rem, 3.5vw, 2.25rem) "Cormorant Garamond", serif;
+    }
     .hero-date {
-      margin: 28px 0 0;
+      margin: 22px 0 0;
       color: rgba(255,250,240,.72);
       font-size: clamp(.98rem, 2.5vw, 1.3rem);
       line-height: 1.65;
       letter-spacing: .3em;
       text-transform: uppercase;
     }
+    .hero-date span { display: block; }
+    .hero-date span + span { margin-top: 4px; }
     .scroll-hint {
       width: max-content;
       margin: 44px auto 0;
@@ -273,7 +286,8 @@
       font: italic 300 clamp(3rem, 7vw, 5.4rem)/.92 "Cormorant Garamond", serif;
     }
     .invitation-copy > .section-kicker {
-      font-size: clamp(.92rem, 1.8vw, 1.08rem);
+      font-size: clamp(1rem, 1.9vw, 1.2rem);
+      letter-spacing: .28em;
     }
     .invitation-copy .date {
       margin: 18px 0 28px;
@@ -567,6 +581,10 @@
       }
       .invitation { box-shadow: 0 24px 58px rgba(122,51,24,.18), inset 0 0 0 10px rgba(255,250,240,.5); }
       .invitation-copy { padding: 68px 32px; }
+      .invitation-copy > .section-kicker {
+        font-size: .95rem;
+        letter-spacing: .2em;
+      }
       .venue-block .venue-name {
         white-space: nowrap;
         font-size: clamp(1.75rem, 8vw, 2.6rem);
@@ -636,11 +654,17 @@
     <div class="sun" aria-hidden="true"></div>
     <div class="hero-copy">
       <p class="kicker reveal" style="font-size: clamp(1.2rem, 3vw, 1.8rem);">
-        Together with our families
+        Well, that only took 11 years...
       </p>
-      <h1 class="reveal"><span>Srushti <em>&amp;</em></span><span>Neil</span></h1>
+      <h1 class="reveal">
+        <span>Srushti</span>
+        <span class="hero-amp">&amp;</span>
+        <span>Neil</span>
+      </h1>
+      <p class="hero-tagline reveal">are tying the knot!</p>
       <p class="hero-date reveal" style="font-size: clamp(1.15rem, 2.5vw, 1.8rem);">
-        Invite you to celebrate · 12 December 2026 · Kochi
+        <span>12th December 2026</span>
+        <span>· Kumbalangi, Kochi</span>
       </p>
       <a class="scroll-hint reveal" href="#intro">Scroll</a>
     </div>
@@ -658,8 +682,8 @@
       <article class="invitation reveal">
         <img class="invitation-drapes" src="drapes-river-4k.png" alt="" aria-hidden="true">
         <div class="invitation-copy">
-          <p class="section-kicker">Please join us</p>
-          <h2>For our wedding celebration</h2>
+          <p class="section-kicker">The wait is nearly over</p>
+          <h2>Let’s make it a day to remember</h2>
           <div class="fine-line"></div>
           <p class="date">Saturday · 12 December · 2026</p>
           <div class="venue-block">
