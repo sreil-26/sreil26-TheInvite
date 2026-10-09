@@ -494,7 +494,7 @@
     }
     .notes-grid { max-width: 1080px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(50px, 8vw, 100px); }
     .notes-copy > .section-kicker {
-      font: italic 500 clamp(1.1rem, 2vw, 1.35rem)/1.2 "Cormorant Garamond", serif;
+      font: italic 500 clamp(1.65rem, 3vw, 2.025rem)/1.2 "Cormorant Garamond", serif;
       letter-spacing: .12em;
       text-transform: none;
     }
@@ -530,7 +530,7 @@
       border: 1px solid rgba(255,250,240,.26);
       pointer-events: none;
     }
-    .closing .section-kicker { color: rgba(255,250,240,.65); }
+    .closing .section-kicker { color: rgba(255,250,240,.65); font-size: .936rem; }
     .closing .section-heading { margin-bottom: 22px; }
     .closing p { margin-bottom: 0; color: rgba(255,250,240,.82); }
 
@@ -937,6 +937,7 @@
       .nav.open .nav-countdown { visibility: hidden; }
       .hero-copy { gap: 8px; }
     }
+    .closing .closing-presence { font-size: 1.2rem; }
 </style>
 </head>
 <body>
@@ -1043,7 +1044,7 @@
       <div class="notes-grid">
         <div class="notes-copy reveal">
           <div class="mosaic-divider" aria-hidden="true"></div>
-          <p class="section-kicker">Guest notes</p>
+          <p class="section-kicker">Guest Notes</p>
           <h2 class="section-heading">A few details before you pack</h2>
           <p>We’ll share final travel and accommodation details here as plans come together.</p>
         </div>
@@ -1088,7 +1089,7 @@
         <svg class="closing-daisy" viewBox="0 0 100 100" aria-hidden="true"><use href="#invite-daisy"/></svg>
         <p class="section-kicker">With all our love</p>
         <h2 class="section-heading"><em>We hope you can join us.</em></h2>
-        <p>Your presence would be the biggest gift to us!</p>
+        <p class="closing-presence">Your presence would be the biggest gift to us!</p>
       </div>
     </section>
   </main>
