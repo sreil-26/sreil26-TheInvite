@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4ead8">
+  <meta name="theme-color" content="#E8EBE2">
   <meta name="description" content="The wedding invitation of Srushti and Neil — 12 December 2026, Kochi, Kerala.">
   <title>Srushti & Neil — The Invitation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1019,6 +1019,56 @@
       .story-milestone-copy p { font-size: clamp(1.05rem,3.8vw,1.3rem); }
       .story-edge-motifs { right: 5px; }
     }
+    /* Subtle sage palette: retain the original illustration colours. */
+    :root {
+      --paper: #E8EBE2;
+      --paper-2: #F2F4ED;
+      --ink: #302B24;
+      --gold: #AD813E;
+      --line: rgba(48,43,36,.2);
+      --shadow: 0 24px 70px rgba(48,43,36,.14);
+    }
+    .hero, .closing { color: #fff4ee; }
+    .nav { color: #fff4ee; }
+    .nav.scrolled { background: #E8EBE2; color: #302B24; }
+    .nav-links { background-color: transparent; }
+    .invitation-wrap { background: #E8EBE2; }
+    .invitation { background-color: #E8EBE2; }
+    .invitation-copy {
+      background: rgba(242,244,237,.97);
+      box-shadow: 0 0 35px 18px rgba(242,244,237,.75);
+    }
+    .invitation-copy p, .invitation-copy .venue-address,
+    .invitation-personal, .invitation-copy .welcome-party,
+    .intro .lead, .notes-copy > p:not(.section-kicker), details p {
+      color: #626657;
+    }
+    .invitation-copy .welcome-time, .invitation-copy .venue-name { color: #302B24; }
+    .invitation-copy .date, .venue-block .venue-intro { color: #526044; }
+    .invitation-copy > .section-kicker { color: #626657; }
+    .card-hashtag { color: #526044 !important; }
+    .card-hashtag span { animation-name: sageHashtagWave; }
+    @keyframes sageHashtagWave {
+      0%, 100% { color: #526044; transform: translateY(0); }
+      50% { color: #8A6028; transform: translateY(-10px); }
+    }
+    .venue-block { border-color: rgba(48,43,36,.2); }
+    main .story-components { background: #E8EBE2; }
+    .story-title h2, .story-milestone-copy h3 { color: #302B24; }
+    .story-title p, .story-milestone-copy p { color: #626657; }
+    .story-title-rule, .story-edge-motifs { color: #AD813E; }
+    .story-connecting-path path { stroke: #AD813E; }
+    .story-illustration { outline-color: #E8EBE2; border-color: #AD813E; }
+    .separator-after-story, .notes { background: #F2F4ED; }
+    .location-note { background: #E8EBE2; border-color: rgba(48,43,36,.2); }
+    .location-note address { color: #626657; }
+    .location-note .location-eyebrow, .notes-copy > .section-kicker { color: #526044; }
+    footer { background: #302B24; color: #F2F4ED; }
+    @media (max-width:760px) {
+      .nav-links { background: #F2F4ED; }
+      .invitation-copy { box-shadow: 0 0 16px 8px rgba(242,244,237,.8); }
+    }
+
 </style>
 </head>
 <body>
