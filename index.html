@@ -939,15 +939,6 @@
     }
     .closing .closing-presence { font-size: 1.2rem; }
 
-    /* Preserve the complete supplied artwork, including its illustrated border. */
-    main .story-artwork { padding: 0; background: #f7edda; }
-    .story-complete-image { display: block; width: 100%; max-width: 1122px; height: auto; margin: 0 auto; }
-
-    /* The original artwork stays centred; only its floral edge follows the page edge. */
-    main .story-artwork { position: relative; overflow: hidden; }
-    .story-complete-image { clip-path: polygon(25% 0, 100% 0, 100% 100%, 29% 100%, 22% 88%, 22% 70%, 21% 50%, 21% 30%, 23% 16%); }
-    .story-left-floral { position: absolute; top: 0; left: 0; display: block; width: min(100%,1122px); height: auto; clip-path: polygon(0 0, 25% 0, 23% 16%, 21% 30%, 21% 50%, 22% 70%, 22% 88%, 29% 100%, 0 100%); pointer-events: none; }
-
     /* Balanced transitions between the invitation, story, and guest notes. */
     main .invitation-wrap { padding-bottom: 0; }
     .section-separator { display: grid; place-items: center; background: var(--paper); }
@@ -976,6 +967,41 @@
       .hero { min-height: 580px; }
       .hero-copy { min-height: 390px; }
       .nav-links { justify-content: flex-start; padding-block: 78px 30px; gap: 20px; }
+    }
+
+    main .story-components { position: relative; isolation: isolate; overflow: hidden; padding: clamp(48px,6vw,80px) 0; background: #f8efd9; }
+    .story-floral-border { position: absolute; inset: 0 auto 0 0; width: clamp(42px,14vw,220px); background: url("our-story-left.png") left top / 100% auto repeat-y; pointer-events: none; }
+    .story-edge-motifs { position: absolute; inset: 60px 12px; left: auto; width: clamp(14px,2.5vw,30px); display: flex; flex-direction: column; justify-content: space-between; align-items: center; color: #b9842c; pointer-events: none; }
+    .story-edge-motifs svg { width: 100%; height: auto; }
+    .story-edge-motifs span { font-size: 22px; }
+    .story-content { position: relative; width: calc(100% - clamp(140px,30vw,520px)); max-width: 940px; margin: 0 auto; }
+    .story-title { text-align: center; margin: 0 0 34px; }
+    .story-title h2 { font: 400 clamp(3.5rem,7vw,6.5rem)/1.05 "Cormorant Garamond",serif; letter-spacing: -.04em; margin: 0; color: #936015; }
+    .story-title-rule { display: flex; align-items: center; gap: 12px; max-width: 300px; margin: 14px auto; color: #b9842c; }
+    .story-title-rule::before,.story-title-rule::after { content: ""; height: 1px; flex: 1; background: currentColor; }
+    .story-title p { color: #244d43; font-size: .8rem; font-weight: 400; line-height: 1.7; letter-spacing: .2em; text-transform: uppercase; margin: 0; }
+    .story-track { position: relative; }
+    .story-connecting-path { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .story-connecting-path path { fill: none; stroke: #b9842c; stroke-width: 2; }
+    .story-milestones { list-style: none; padding: 0; margin: 0; }
+    .story-milestone { position: relative; display: grid; grid-template-columns: minmax(0,1fr) clamp(150px,18vw,230px) minmax(0,1fr); gap: clamp(12px,2vw,28px); align-items: center; min-height: 200px; padding-block: 12px; }
+    .story-illustration { grid-column: 2; grid-row: 1; justify-self: center; width: clamp(110px,13vw,168px); height: auto; border-radius: 50%; border: 2px solid #b9842c; outline: 5px solid #f8efd9; transform: translateX(-24px); }
+    .story-milestone:nth-child(even) .story-illustration { transform: translateX(24px); }
+    .story-milestone-copy { grid-column: 3; grid-row: 1; min-width: 0; }
+    .story-milestone:nth-child(odd):not(:first-child) .story-milestone-copy { grid-column: 1; text-align: right; }
+    .story-milestone-copy h3 { color: #a34727; font: 400 clamp(1.65rem,2.5vw,2.4rem)/1.15 "Cormorant Garamond",serif; margin: 0 0 8px; }
+    .story-milestone-copy p { color: #244d43; font: 400 clamp(1.15rem,1.8vw,1.5rem)/1.45 "Cormorant Garamond",serif; margin: 0; }
+    @media (max-width: 760px) {
+      .story-content { width: auto; max-width: none; margin-left: clamp(58px,16vw,120px); margin-right: 30px; }
+      .story-title h2 { font-size: clamp(2.8rem,9vw,4rem); }
+      .story-title p { font-size: .66rem; letter-spacing: .12em; }
+      .story-milestone { grid-template-columns: clamp(82px,25vw,150px) minmax(0,1fr); gap: clamp(12px,3vw,24px); min-height: 170px; padding-block: 18px; }
+      .story-illustration { grid-column: 1; width: clamp(76px,22vw,128px); transform: translateX(-4px); }
+      .story-milestone:nth-child(even) .story-illustration { transform: translateX(4px); }
+      .story-milestone-copy, .story-milestone:nth-child(odd):not(:first-child) .story-milestone-copy { grid-column: 2; text-align: left; }
+      .story-milestone-copy h3 { font-size: clamp(1.45rem,5vw,1.9rem); }
+      .story-milestone-copy p { font-size: clamp(1.05rem,3.8vw,1.3rem); }
+      .story-edge-motifs { right: 5px; }
     }
 </style>
 </head>
@@ -1067,9 +1093,13 @@
 
     <div class="section-separator separator-before-story" aria-hidden="true"><div class="mosaic-divider"></div></div>
 
-    <section class="our-story story-artwork" id="schedule" aria-label="Our Story: a journey of many beautiful beginnings">
-      <img class="story-left-floral" src="our-story-complete.png" width="1122" height="1402" alt="" aria-hidden="true">
-      <img class="story-complete-image" src="our-story-complete.png" width="1122" height="1402" alt="Our Story — a journey of many beautiful beginnings. 2011: They first crossed paths at school. 2014: They met again in college. November 2015: Best friends became something more. May 2022: They got engaged before Neil moved to London. September 2023: Srushti moved to London for her master’s. September 2024: They moved in together. 3 August 2026: They had their civil marriage ceremony in London. December 2026: They celebrate their marriage with family in Kochi.">
+    <section class="our-story story-components" id="schedule" aria-labelledby="story-heading">
+      <div class="story-floral-border" aria-hidden="true"></div>
+      <div class="story-edge-motifs" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#invite-daisy"/></svg><span>✦</span><svg viewBox="0 0 100 100"><use href="#invite-daisy"/></svg><span>✦</span><svg viewBox="0 0 100 100"><use href="#invite-daisy"/></svg><span>✦</span><svg viewBox="0 0 100 100"><use href="#invite-daisy"/></svg><span>✦</span></div>
+      <div class="story-content">
+        <div class="story-title"><h2 id="story-heading">Our Story</h2><div class="story-title-rule" aria-hidden="true"><span>◆</span></div><p>A journey of many beautiful beginnings</p></div>
+        <div class="story-track"><svg class="story-connecting-path" aria-hidden="true"><path/></svg><ol class="story-milestones"><li class="story-milestone"><img class="story-illustration" src="story-1.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>2011</h3><p>They first crossed paths at school.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-2.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>2014</h3><p>They met again in college.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-3.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Nov 2015</h3><p>Best friends became something more.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-4.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>May 2022</h3><p>They got engaged before Neil moved to London.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-5.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Sept 2023</h3><p>Srushti moved to London for her master’s.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-6.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Sept 2024</h3><p>They moved in together.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-7.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>3 Aug 2026</h3><p>They had their civil marriage ceremony in London.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-8.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Dec 2026</h3><p>They celebrate their marriage with family in Kochi.</p></div></li></ol></div>
+      </div>
     </section>
 
     <div class="section-separator separator-after-story" aria-hidden="true"><div class="mosaic-divider"></div></div>
@@ -1289,6 +1319,33 @@
     countdownTimer = window.setInterval(updateCountdown, 1000);
 
 
+
+    // Connect the actual illustration centres, including after text wraps or fonts load.
+    const storyTrack = document.querySelector('.story-track');
+    const drawStoryPath = () => {
+      if (!storyTrack) return;
+      const bounds = storyTrack.getBoundingClientRect();
+      const points = Array.from(storyTrack.querySelectorAll('.story-illustration')).map(img => {
+        const r = img.getBoundingClientRect();
+        return {x:r.left-bounds.left+r.width/2, y:r.top-bounds.top+r.height/2};
+      });
+      if (!points.length) return;
+      const svg = storyTrack.querySelector('svg');
+      svg.setAttribute('viewBox', `0 0 ${bounds.width} ${bounds.height}`);
+      let d = `M ${points[0].x} ${points[0].y}`;
+      points.slice(1).forEach((p,i) => {
+        const previous = points[i], mid = (previous.y+p.y)/2;
+        d += ` C ${previous.x} ${mid}, ${p.x} ${mid}, ${p.x} ${p.y}`;
+      });
+      svg.querySelector('path').setAttribute('d',d);
+    };
+    if (storyTrack) {
+      if ('ResizeObserver' in window) new ResizeObserver(drawStoryPath).observe(storyTrack);
+      window.addEventListener('resize',drawStoryPath,{passive:true});
+      window.addEventListener('load',drawStoryPath);
+      if (document.fonts) document.fonts.ready.then(drawStoryPath);
+      drawStoryPath();
+    }
   </script>
 </body>
 </html>
