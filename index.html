@@ -1102,6 +1102,16 @@
     .gift-note { padding: 24px 0; border-bottom: 1px solid var(--line); }
     .gift-note h3 { margin: 0 0 12px; color: #526044; font: 400 1.45rem "Cormorant Garamond", serif; }
     .gift-note p { margin: 0; color: #626657; line-height: 1.7; }
+    /* Native disclosure keeps the story accessible without JavaScript. */
+    .story-details { border: 0; }
+    .story-toggle { width: fit-content; min-height: 48px; margin: 0 auto; padding: 12px 24px; border: 1px solid var(--gold); color: var(--ink); font: 400 1.3rem "Cormorant Garamond", serif; text-align: center; }
+    .story-toggle::after, .story-details[open] > .story-toggle::after { content: none; }
+    .story-toggle span[aria-hidden] { margin-left: 10px; color: var(--gold); }
+    .story-close-label { display: none; }
+    .story-details[open] .story-open-label { display: none; }
+    .story-details[open] .story-close-label { display: inline; }
+    .story-details[open] .story-track { margin-top: 30px; }
+    .story-details .story-milestone-copy p { padding: 0; }
 </style>
 </head>
 <body>
@@ -1251,7 +1261,13 @@
       <div class="story-edge-motifs" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#invite-daisy"/></svg><span>✦</span><svg viewBox="0 0 100 100"><use href="#invite-daisy"/></svg><span>✦</span><svg viewBox="0 0 100 100"><use href="#invite-daisy"/></svg><span>✦</span><svg viewBox="0 0 100 100"><use href="#invite-daisy"/></svg><span>✦</span></div>
       <div class="story-content">
         <div class="story-title"><h2 id="story-heading">Our Story</h2><div class="story-title-rule" aria-hidden="true"><span>◆</span></div><p>A journey of many beautiful beginnings</p></div>
-        <div class="story-track"><svg class="story-connecting-path" aria-hidden="true"><path/></svg><ol class="story-milestones"><li class="story-milestone"><img class="story-illustration" src="story-1.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>2011</h3><p>We first crossed paths at school.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-2.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>2014</h3><p>Met again in college.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-3.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Nov 2015</h3><p>Best friends became something more.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-4.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>May 2022</h3><p>We got engaged before Neil moved to London.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-5.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Sept 2023</h3><p>Srushti moved to London for her master’s.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-6.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Sept 2024</h3><p>Moved in together.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-7.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>3 Aug 2026</h3><p>Had our civil marriage ceremony in London.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-8.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Dec 2026</h3><p>Celebrating our marriage with family in Kochi.</p></div></li></ol></div>
+        <details class="story-details" id="storyDetails">
+          <summary class="story-toggle">
+            <span class="story-open-label">Read our story <span aria-hidden="true">+</span></span>
+            <span class="story-close-label">Close our story <span aria-hidden="true">−</span></span>
+          </summary>
+          <div class="story-track"><svg class="story-connecting-path" aria-hidden="true"><path/></svg><ol class="story-milestones"><li class="story-milestone"><img class="story-illustration" src="story-1.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>2011</h3><p>We first crossed paths at school.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-2.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>2014</h3><p>Met again in college.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-3.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Nov 2015</h3><p>Best friends became something more.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-4.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>May 2022</h3><p>We got engaged before Neil moved to London.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-5.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Sept 2023</h3><p>Srushti moved to London for her master’s.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-6.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Sept 2024</h3><p>Moved in together.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-7.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>3 Aug 2026</h3><p>Had our civil marriage ceremony in London.</p></div></li><li class="story-milestone"><img class="story-illustration" src="story-8.webp" alt="" width="320" height="320"><div class="story-milestone-copy"><h3>Dec 2026</h3><p>Celebrating our marriage with family in Kochi.</p></div></li></ol></div>
+        </details>
       </div>
     </section>
 
@@ -1433,6 +1449,7 @@
     const drawStoryPath = () => {
       if (!storyTrack) return;
       const bounds = storyTrack.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return;
       const points = Array.from(storyTrack.querySelectorAll('.story-illustration')).map(img => {
         const r = img.getBoundingClientRect();
         return {x:r.left-bounds.left+r.width/2, y:r.top-bounds.top+r.height/2};
@@ -1453,6 +1470,28 @@
       window.addEventListener('load',drawStoryPath);
       if (document.fonts) document.fonts.ready.then(drawStoryPath);
       drawStoryPath();
+    }
+
+    const storyDetails = document.querySelector('#storyDetails');
+    if (storyDetails) {
+      storyDetails.addEventListener('toggle', () => {
+        if (storyDetails.open) requestAnimationFrame(drawStoryPath);
+        requestAnimationFrame(updateScroll);
+      });
+      document.querySelectorAll('a[href="#schedule"]').forEach(link => {
+        link.addEventListener('click', () => {
+          storyDetails.open = true;
+          requestAnimationFrame(drawStoryPath);
+        });
+      });
+      const openLinkedStory = () => {
+        if (window.location.hash === '#schedule') {
+          storyDetails.open = true;
+          requestAnimationFrame(drawStoryPath);
+        }
+      };
+      window.addEventListener('hashchange', openLinkedStory);
+      openLinkedStory();
     }
   </script>
 </body>
